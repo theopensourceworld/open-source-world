@@ -218,13 +218,14 @@ const Footer: React.FC = () => {
                 className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary"
-              >
-                <FaEnvelope className="mr-2" />
-                Subscribe
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-primary flex items-center justify-center px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition"
+                >
+                  <FaEnvelope className="mr-2" aria-hidden="true" />
+                  <span>Subscribe</span>
               </motion.button>
+
             </div>
           </div>
         </motion.div>
