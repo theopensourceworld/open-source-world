@@ -4,13 +4,14 @@ import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 import { itemVariants, containerVariants } from '../../utils/animations';
+import { useTheme } from '../../context/ThemeContext';
 
 const TeamSection: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
   // Using properly typed variants from utils
-
+  const { theme, toggleTheme } = useTheme();
   // Sample team members - you can replace with actual team data
   const teamMembers = [
     {
@@ -102,7 +103,7 @@ const TeamSection: React.FC = () => {
   );
 
   return (
-    <section id="team" className="section-padding bg-white">
+    <section id="team" className={theme === 'light'? "section-padding bg-white": "dark: darkbg"}>
       <div className="container-max" ref={ref}>
         <motion.div
           variants={containerVariants}
@@ -111,10 +112,10 @@ const TeamSection: React.FC = () => {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-secondary-900 mb-6">
+            <h2 className={theme === 'light'? "text-4xl font-bold mb-4 text-secondary-900": "text-4xl font-bold mb-4 text-white"}>
               Meet Our <span className="text-gradient">Amazing Team</span>
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
+            <p className={theme === 'light'? "text-lg text-secondary-600 max-w-2xl mx-auto": "text-lg text-white max-w-2xl mx-auto"}>
               Passionate individuals working together to build the future of open source collaboration.
               Each bringing unique skills and perspectives to our global mission.
             </p>
@@ -127,7 +128,7 @@ const TeamSection: React.FC = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -10 }}
-                className="card p-6 text-center group overflow-hidden"
+                className={theme === 'light' ? "card p-6 text-center group overflow-hidden" :  " card bg-[#444b4a] p-6 text-center text-white group overflow-hidden"}
               >
                 {/* Avatar */}
                 <div className="relative mb-6">
@@ -148,7 +149,7 @@ const TeamSection: React.FC = () => {
                       }}
                     />
                     <div 
-                      className="w-full h-full bg-gradient-to-br from-primary-500 to-primary-700 items-center justify-center text-white font-bold text-xl hidden"
+                      className={theme === 'light' ? "w-full h-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600" : "w-full h-full bg-gray-700 flex items-center justify-center text-2xl font-bold text-white"}
                     >
                       {member.name.split(' ').map(n => n[0]).join('')}
                     </div>
@@ -156,9 +157,9 @@ const TeamSection: React.FC = () => {
                 </div>
 
                 {/* Member Info */}
-                <h3 className="text-xl font-bold text-secondary-900 mb-2">{member.name}</h3>
-                <p className="text-primary-600 font-semibold mb-4">{member.role}</p>
-                <p className="text-secondary-600 text-sm leading-relaxed mb-6">{member.bio}</p>
+                <h3 className={theme === 'light'? 'text-xl font-bold text-secondary-900 mb-2': "text-xl font-bold text-white mb-2"}>{member.name}</h3>
+                <p className={theme === 'light'? "text-primary-600 font-semibold mb-4": "text-gradient font-semibold mb-4"}>{member.role}</p>
+                <p className={theme === 'light'? "text-secondary-600 text-sm leading-relaxed mb-6": "text-white text-sm leading-relaxed mb-6"}>{member.bio}</p>
 
                 {/* Social Links */}
                 <div className="flex items-center justify-center space-x-3">
@@ -189,9 +190,9 @@ const TeamSection: React.FC = () => {
 
           {/* Join Team CTA */}
           <motion.div variants={itemVariants} className="text-center mt-16">
-            <div className="bg-gradient-to-r from-primary-50 to-green-50 rounded-3xl p-12">
-              <h3 className="text-3xl font-bold text-secondary-900 mb-6">Want to Join Our Team?</h3>
-              <p className="text-xl text-secondary-600 mb-8 max-w-2xl mx-auto">
+            <div className={theme === 'light'? "bg-gray-100 p-8 rounded-2xl inline-block": "dark:darkbg p-8 rounded-2xl inline-block"}>
+              <h3 className={theme === 'light'? "text-3xl font-bold text-secondary-900 mb-6": "text-3xl font-bold text-white mb-6"}>Want to Join Our Team?</h3>
+              <p className={theme === 'light'? "text-secondary-600 mb-6 max-w-xl mx-auto": "text-white mb-6 max-w-xl mx-auto" }>
                 We're always looking for passionate individuals who share our vision of 
                 building a better world through open source technology.
               </p>

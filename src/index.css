@@ -90,3 +90,13 @@
   .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
   .lg\:text-7xl { font-size: 4.5rem; }
 }
+/* global.css */
+.lightbg {
+  background-color: #ffffff;
+  color: #111827; /* dark text */
+}
+
+.darkbg {
+  background-color: #111827;
+  color: #f9fafb; /* light text */
+}

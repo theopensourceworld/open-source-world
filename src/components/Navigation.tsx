@@ -2,9 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
+
+
+
+import '../index.css'
+import { P } from 'framer-motion/dist/types.d-Cjd591yU';
+import { useTheme } from '../context/ThemeContext';
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  //using the hook 
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,15 +40,18 @@ const Navigation: React.FC = () => {
   };
 
   return (
+
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${ 
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-lg' 
-          : 'bg-transparent'
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled
+          ? theme === "light"
+            ? "bg-white/95 backdrop-blur-md shadow-lg text-gray-400"
+            : "bg-[#939395]"
+          : ""
+        }`}
     >
+
+
+
       <div className="container-max">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
@@ -51,11 +63,11 @@ const Navigation: React.FC = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-lg">OSW</span>
             </div>
-            <span className={`font-bold text-xl transition-colors ${
-              isScrolled ? 'text-secondary-900' : 'text-white'
-            }`}>
+            <span className={`font-bold text-xl transition-colors ${isScrolled ? 'text-secondary-900' : 'text-white'
+              }`}>
               Open Source World
             </span>
+
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -65,22 +77,25 @@ const Navigation: React.FC = () => {
                 key={item.name}
                 whileHover={{ y: -2 }}
                 onClick={() => scrollToSection(item.href)}
-                className={`font-medium transition-colors ${
-                  isScrolled 
-                    ? 'text-secondary-700 hover:text-primary-600' 
-                    : 'text-white/90 hover:text-white'
-                }`}
+                className={`font-medium transition-colors ${isScrolled
+                  ? 'text-secondary-700 hover:text-primary-600'
+                  : 'text-white/90 hover:text-white'
+                  }`}
               >
                 {item.name}
               </motion.button>
             ))}
+            {/* Theme Toggle */}
+            <button onClick={toggleTheme}>
+              {theme === "light" ? "Dark Mode" : "Light Mode"}
+            </button>
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection('#contact')}
-              className={`btn-primary ${
-                !isScrolled ? 'bg-white text-primary-600 hover:bg-gray-100' : ''
-              }`}
+              className={`btn-primary ${!isScrolled ? 'bg-white text-primary-600 hover:bg-gray-100' : ''
+                }`}
             >
               Get Involved
             </motion.button>
@@ -91,9 +106,8 @@ const Navigation: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2 rounded-lg ${
-                isScrolled ? 'text-secondary-700' : 'text-white'
-              }`}
+              className={`p-2 rounded-lg ${isScrolled ? 'text-secondary-700' : 'text-white'
+                }`}
             >
               {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
             </motion.button>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { use } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaRocket, FaUsers, FaGlobe } from 'react-icons/fa';
 import { itemVariants, containerVariants } from '../../utils/animations';
-
+import { ThemeProvider } from '../../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 const HeroSection: React.FC = () => {
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -12,7 +13,7 @@ const HeroSection: React.FC = () => {
   };
 
   // Using properly typed variants from utils
-
+  const {theme, toggleTheme} = useTheme();
   return (
     <section 
       id="hero" 
@@ -88,7 +89,7 @@ const HeroSection: React.FC = () => {
           <motion.div
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center justify-center w-32 h-32 bg-white/20 backdrop-blur-md rounded-3xl mb-8 shadow-2xl"
+            className={theme === 'light' ? "w-24 h-24 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg cursor-pointer" : "hidden"}
           >
             <FaGlobe size={64} className="text-white" />
           </motion.div>
@@ -142,7 +143,7 @@ const HeroSection: React.FC = () => {
               whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection('#about')}
-              className="bg-white text-primary-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl text-lg"
+              className="bg-white text-primary-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl text-lg "
             >
               Learn More
             </motion.button>

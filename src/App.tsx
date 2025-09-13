@@ -6,20 +6,27 @@ import TeamSection from './components/sections/TeamSection';
 import ContactSection from './components/sections/ContactSection';
 import CTABanner from './components/sections/CTABanner';
 import Footer from './components/Footer';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   return (
+    
+    
+   
     <div className="App">
-      <Navigation />
-      <main>
-        <HeroSection />
-        <AboutSection />
-        <TeamSection />
-        <CTABanner />
-        <ContactSection />
-      </main>
-      <Footer />
+       <ThemeProvider>
+        <Navigation />
+        <main>
+          <HeroSection />
+          <AboutSection />
+          <TeamSection />
+          <CTABanner />
+          <ContactSection />
+        </main>
+        <Footer />
+       </ThemeProvider>
     </div>
+    
   );
 }
 

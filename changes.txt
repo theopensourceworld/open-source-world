@@ -1,0 +1,7 @@
+### used context for theme toggle to be persitent on all pages
+    created a seperate theme for toggling and defined a darkbg class
+    for custom background
+
+    for other components that need the switch in color, added seperate styles
+    based on conditional operator for  the value of theme
+

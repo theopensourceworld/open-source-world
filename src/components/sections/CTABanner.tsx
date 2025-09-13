@@ -4,13 +4,13 @@ import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { FaRocket, FaUsers, FaCode, FaArrowRight } from 'react-icons/fa';
 import { itemVariants, containerVariants } from '../../utils/animations';
-
+import { useTheme } from '../../context/ThemeContext';
 const CTABanner: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
   // Using properly typed variants from utils
-
+   const { theme, toggleTheme } = useTheme();
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -40,7 +40,7 @@ const CTABanner: React.FC = () => {
   ];
 
   return (
-    <section className="section-padding bg-white">
+    <section className={theme === 'light' ? "py-16 bg-gray-50" : "py-16 dark: darkbg"}>
       <div className="container-max" ref={ref}>
         <motion.div
           variants={containerVariants}
@@ -71,8 +71,9 @@ const CTABanner: React.FC = () => {
 
             <div className="relative z-10 text-center">
               <motion.div
+
                 variants={itemVariants}
-                className="mb-8"
+                className={theme === 'light' ? "mb-8" : "mb-8 dark:darkbg"}
               >
                 <motion.div
                   animate={{ rotate: [0, 10, -10, 0] }}
@@ -149,52 +150,53 @@ const CTABanner: React.FC = () => {
           {/* Stats Banner */}
           <motion.div
             variants={itemVariants}
-            className="mt-12 bg-gradient-to-r from-gray-50 to-white rounded-2xl p-8"
+            className={theme === 'light' ? "mt-12 bg-white rounded-3xl p-8 shadow-xl border border-gray-100" : "mt-12 bg-[#444b4a] rounded-3xl p-8 shadow-xl bg-[#444b4a]"}
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              
               <div>
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-primary-600 mb-2"
-                >
-                  500+
+                  className={theme === 'light' ? "text-3xl font-bold text-primary-600 mb-2" : "text-3xl font-bold text-white mb-2"}
+                  >
+                  500
                 </motion.div>
-                <p className="text-secondary-600 font-medium">Contributors</p>
+                <p className={theme === 'light'? "text-secondary-600 font-medium": "text-white font-medium"}>Contributors</p>
               </div>
               <div>
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-primary-600 mb-2"
+                  className={theme === 'light' ? "text-3xl font-bold text-primary-600 mb-2" : "text-3xl font-bold text-white mb-2"}
                 >
                   100+
                 </motion.div>
-                <p className="text-secondary-600 font-medium">Projects</p>
+                <p className={theme === 'light'? "text-secondary-600 font-medium": "text-white font-medium"}>Projects</p>
               </div>
               <div>
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-primary-600 mb-2"
+                  className={theme === 'light' ? "text-3xl font-bold text-primary-600 mb-2" : "text-3xl font-bold text-white mb-2"}
                 >
                   50+
                 </motion.div>
-                <p className="text-secondary-600 font-medium">Countries</p>
+                <p className={theme === 'light'? "text-secondary-600 font-medium": "text-white font-medium"}>Countries</p>
               </div>
               <div>
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-primary-600 mb-2"
+                  className={theme === 'light' ? "text-3xl font-bold text-primary-600 mb-2" : "text-3xl font-bold text-white mb-2"}
                 >
                   24/7
                 </motion.div>
-                <p className="text-secondary-600 font-medium">Community</p>
+                <p className={theme === 'light'? "text-secondary-600 font-medium": "text-white font-medium"}>Community</p>
               </div>
             </div>
           </motion.div>
