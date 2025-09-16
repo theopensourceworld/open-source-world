@@ -49,7 +49,8 @@ const CTABanner: React.FC = () => {
           className="relative overflow-hidden"
         >
           {/* Main CTA Banner */}
-          <div className="relative bg-gradient-to-r from-primary-600 via-primary-700 to-green-600 rounded-3xl p-12 lg:p-16 text-white overflow-hidden">
+         <div className="relative bg-gradient-to-r from-[#073f70] via-[#073f70] to-[#1f84d6] rounded-3xl p-12 lg:p-16 text-white overflow-hidden">
+
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <motion.div
@@ -106,7 +107,7 @@ const CTABanner: React.FC = () => {
                   whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollToSection('#contact')}
-                  className="bg-white text-primary-600 hover:bg-primary-50 font-bold py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl text-lg flex items-center space-x-2"
+                  className="bg-white text-[#1f84d6] hover:bg-[#e6f3ff] font-bold py-4 px-8 rounded-2xl transition-all duration-300 shadow-xl text-lg flex items-center space-x-2"
                 >
                   <span>Get Started Now</span>
                   <FaArrowRight />
@@ -115,7 +116,8 @@ const CTABanner: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => window.open('https://github.com/oathar/open-source-world', '_blank')}
-                  className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-600 font-bold py-4 px-8 rounded-2xl transition-all duration-300 text-lg"
+                  className="bg-[#f8f9fa] border-2 border-[#073f70] text-[#1f84d6] hover:bg-[#e6f3ff] hover:text-[#073f70] font-bold py-4 px-8 rounded-2xl transition-all duration-300 text-lg"
+
                 >
                   View Projects
                 </motion.button>
@@ -157,7 +159,7 @@ const CTABanner: React.FC = () => {
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-primary-600 mb-2"
+                  className="text-3xl font-bold text-[#073f70] mb-2"
                 >
                   500+
                 </motion.div>
@@ -168,7 +170,7 @@ const CTABanner: React.FC = () => {
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-primary-600 mb-2"
+                  className="text-3xl font-bold text-[#073f70] mb-2"
                 >
                   100+
                 </motion.div>
@@ -179,7 +181,7 @@ const CTABanner: React.FC = () => {
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-primary-600 mb-2"
+                  className="text-3xl font-bold text-[#073f70] mb-2"
                 >
                   50+
                 </motion.div>
@@ -190,7 +192,7 @@ const CTABanner: React.FC = () => {
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                  className="text-3xl font-bold text-primary-600 mb-2"
+                  className="text-3xl font-bold text-[#073f70] mb-2"
                 >
                   24/7
                 </motion.div>

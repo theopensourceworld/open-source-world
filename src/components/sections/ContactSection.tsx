@@ -34,28 +34,26 @@ const ContactSection: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Using properly typed variants from utils
-
   const socialLinks = [
     {
       name: 'GitHub',
       icon: FaGithub,
       url: 'https://github.com/theopensourceworld',
-      color: 'hover:bg-gray-800',
+      color: 'hover:bg-gray-900',
       description: 'Contribute to our projects'
     },
     {
       name: 'LinkedIn',
       icon: FaLinkedin,
       url: 'https://linkedin.com/company/open-source-world',
-      color: 'hover:bg-blue-600',
+      color: 'hover:bg-blue-700',
       description: 'Professional network'
     },
     {
       name: 'Twitter',
       icon: FaTwitter,
       url: 'https://twitter.com/opensourceworld',
-      color: 'hover:bg-blue-400',
+      color: 'hover:bg-blue-500',
       description: 'Latest updates'
     },
     {
@@ -136,10 +134,10 @@ const ContactSection: React.FC = () => {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-secondary-900 mb-6">
-              Get In <span className="text-gradient">Touch</span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-black mb-6">
+              Get In <span className="bg-gradient-to-r from-blue-900 to-blue-600 bg-clip-text text-transparent">Touch</span>
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
               Ready to join our mission? Have questions about our initiatives? 
               We'd love to hear from you and explore how we can collaborate.
             </p>
@@ -148,8 +146,8 @@ const ContactSection: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <motion.div variants={itemVariants}>
-              <div className="card p-8">
-                <h3 className="text-2xl font-bold text-secondary-900 mb-6">Send Message</h3>
+              <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+                <h3 className="text-2xl font-bold text-black mb-6">Send Message</h3>
                 
                 {isSubmitted ? (
                   <motion.div
@@ -160,19 +158,19 @@ const ContactSection: React.FC = () => {
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1 }}
-                      className="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6"
+                      className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6"
                     >
-                      <FaCheckCircle size={40} className="text-primary-600" />
+                      <FaCheckCircle size={40} className="text-blue-600" />
                     </motion.div>
-                    <h4 className="text-2xl font-bold text-secondary-900 mb-4">Message Sent!</h4>
-                    <p className="text-secondary-600">
+                    <h4 className="text-2xl font-bold text-black mb-4">Message Sent!</h4>
+                    <p className="text-gray-600">
                       Thank you for reaching out. We'll get back to you within 24 hours.
                     </p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-2">
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-800 mb-2">
                         Full Name *
                       </label>
                       <input
@@ -181,7 +179,7 @@ const ContactSection: React.FC = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors ${
                           errors.name ? 'border-red-300' : 'border-gray-200'
                         }`}
                         placeholder="Enter your full name"
@@ -192,7 +190,7 @@ const ContactSection: React.FC = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-800 mb-2">
                         Email Address *
                       </label>
                       <input
@@ -201,7 +199,7 @@ const ContactSection: React.FC = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors ${
                           errors.email ? 'border-red-300' : 'border-gray-200'
                         }`}
                         placeholder="Enter your email address"
@@ -212,7 +210,7 @@ const ContactSection: React.FC = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-secondary-700 mb-2">
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-800 mb-2">
                         Message *
                       </label>
                       <textarea
@@ -221,7 +219,7 @@ const ContactSection: React.FC = () => {
                         rows={6}
                         value={formData.message}
                         onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none ${
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors resize-none ${
                           errors.message ? 'border-red-300' : 'border-gray-200'
                         }`}
                         placeholder="Tell us about your project, questions, or how you'd like to contribute..."
@@ -236,7 +234,7 @@ const ContactSection: React.FC = () => {
                       disabled={isSubmitting}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`w-full btn-primary flex items-center justify-center space-x-2 ${
+                      className={`w-full bg-gradient-to-r from-blue-900 to-blue-600 hover:from-blue-800 hover:to-blue-500 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 ${
                         isSubmitting ? 'opacity-75 cursor-not-allowed' : ''
                       }`}
                     >
@@ -260,44 +258,44 @@ const ContactSection: React.FC = () => {
             {/* Contact Info & Social Links */}
             <motion.div variants={itemVariants} className="flex flex-col gap-6">
               {/* Contact Info */}
-              <div className="card p-8">
-                <h3 className="text-2xl font-bold text-secondary-900 mb-6">Contact Info</h3>
+              <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+                <h3 className="text-2xl font-bold text-black mb-6">Contact Info</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
-                      <FaEnvelope className="text-primary-600" />
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                      <FaEnvelope className="text-blue-600" />
                     </div>
                     <div>
-                      <p className="font-semibold text-secondary-900">Email</p>
-                      <p className="text-secondary-600">opensourceworld.fyi@gmail.com</p>
+                      <p className="font-semibold text-black">Email</p>
+                      <p className="text-gray-600">opensourceworld.fyi@gmail.com</p>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
-                      <FaMapMarkerAlt className="text-primary-600" />
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                      <FaMapMarkerAlt className="text-blue-600" />
                     </div>
                     <div>
-                      <p className="font-semibold text-secondary-900">Global Presence</p>
-                      <p className="text-secondary-600">Worldwide Community</p>
+                      <p className="font-semibold text-black">Global Presence</p>
+                      <p className="text-gray-600">Worldwide Community</p>
                     </div>
                   </div>
 
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
-                      <FaPhone className="text-primary-600" />
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                      <FaPhone className="text-blue-600" />
                     </div>
                     <div>
-                      <p className="font-semibold text-secondary-900">Response Time</p>
-                      <p className="text-secondary-600">Within 24 hours</p>
+                      <p className="font-semibold text-black">Response Time</p>
+                      <p className="text-gray-600">Within 24 hours</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Social Links */}
-              <div className="card p-8">
-                <h3 className="text-2xl font-bold text-secondary-900 mb-6">Connect With Us</h3>
+              <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+                <h3 className="text-2xl font-bold text-black mb-6">Connect With Us</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {socialLinks.map((social, index) => (
                     <motion.a
@@ -307,17 +305,17 @@ const ContactSection: React.FC = () => {
                       rel="noopener noreferrer"
                       whileHover={{ y: -5, scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`p-4 rounded-2xl border-2 border-gray-100 hover:border-primary-200 transition-all duration-300 text-center group ${social.color}`}
+                      className={`p-4 rounded-2xl border-2 border-gray-100 hover:border-blue-200 transition-all duration-300 text-center group ${social.color}`}
                     >
                       <div className="flex flex-col items-center space-y-2">
-                        <div className="text-secondary-700 group-hover:text-white transition-colors">
+                        <div className="text-gray-700 group-hover:text-white transition-colors">
                           <social.icon size={24} />
                         </div>
                         <div>
-                          <p className="font-semibold text-secondary-900 group-hover:text-white transition-colors">
+                          <p className="font-semibold text-black group-hover:text-white transition-colors">
                             {social.name}
                           </p>
-                          <p className="text-sm text-secondary-600 group-hover:text-white/90 transition-colors">
+                          <p className="text-sm text-gray-600 group-hover:text-white/90 transition-colors">
                             {social.description}
                           </p>
                         </div>
@@ -327,28 +325,28 @@ const ContactSection: React.FC = () => {
                 </div>
               </div>
 
-               {/* Newsletter Subscription */}
-  <div className="card p-8 bg-gradient-to-r from-primary-500 to-primary-600 text-white">
-    <h3 className="text-2xl font-bold mb-4">Stay Updated</h3>
-    <p className="mb-6 text-primary-100">
-      Subscribe to our newsletter for the latest updates, opportunities, and open source insights.
-    </p>
-    <div className="flex flex-col sm:flex-row gap-3">
-      <input
-        type="email"
-        placeholder="Enter your email"
-        className="flex-1 px-4 py-3 rounded-xl text-secondary-900 focus:outline-none focus:ring-2 focus:ring-white min-h-[50px]"
-      />
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="bg-white text-primary-600 font-semibold px-6 py-3 rounded-xl hover:bg-primary-50 transition-colors h-[50px]"
-      >
-        Subscribe
-      </motion.button>
-    </div>
-  </div>
-  </motion.div>
+              {/* Newsletter Subscription */}
+              <div className="bg-gradient-to-r from-blue-900 to-blue-600 rounded-2xl p-8 text-white shadow-xl">
+                <h3 className="text-2xl font-bold mb-4">Stay Updated</h3>
+                <p className="mb-6 text-blue-100">
+                  Subscribe to our newsletter for the latest updates, opportunities, and open source insights.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="flex-1 px-4 py-3 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-white min-h-[50px]"
+                  />
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-white text-blue-600 font-semibold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors h-[50px]"
+                  >
+                    Subscribe
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>

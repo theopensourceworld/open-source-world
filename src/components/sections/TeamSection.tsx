@@ -3,13 +3,11 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
-import { itemVariants, containerVariants } from '../../utils/animations';
+import { itemVariants, containerVariants } from '../../utils/animations'; // Assuming these utilities are still valid
 
 const TeamSection: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-
-  // Using properly typed variants from utils
 
   // Sample team members - you can replace with actual team data
   const teamMembers = [
@@ -29,7 +27,7 @@ const TeamSection: React.FC = () => {
       name: "Sarah Chen",
       role: "CTO",
       bio: "Full-stack developer and open source advocate. Loves building scalable solutions and mentoring developers.",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=300&h=300&fit=crop&crop=face",
+      avatar: "https://warburgpincus.com/wp-content/uploads/2019/10/Sarah-Chen-web-1024x991.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
@@ -94,7 +92,7 @@ const TeamSection: React.FC = () => {
       rel="noopener noreferrer"
       whileHover={{ scale: 1.2, y: -2 }}
       whileTap={{ scale: 0.9 }}
-      className="w-10 h-10 bg-gray-100 hover:bg-primary-100 rounded-xl flex items-center justify-center text-gray-600 hover:text-primary-600 transition-all duration-300"
+      className="w-10 h-10 bg-sky-blue hover:bg-light-blue rounded-xl flex items-center justify-center text-ocean-blue hover:text-deep-navy transition-all duration-300"
       aria-label={label}
     >
       {icon}
@@ -102,7 +100,7 @@ const TeamSection: React.FC = () => {
   );
 
   return (
-    <section id="team" className="section-padding bg-white">
+    <section id="team" className="section-padding bg-light-gray">
       <div className="container-max" ref={ref}>
         <motion.div
           variants={containerVariants}
@@ -111,10 +109,10 @@ const TeamSection: React.FC = () => {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-secondary-900 mb-6">
+            <h2 className="text-4xl sm:text-5xl font-bold text-deep-navy mb-6">
               Meet Our <span className="text-gradient">Amazing Team</span>
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-dark-gray max-w-3xl mx-auto leading-relaxed">
               Passionate individuals working together to build the future of open source collaboration.
               Each bringing unique skills and perspectives to our global mission.
             </p>
@@ -127,7 +125,7 @@ const TeamSection: React.FC = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -10 }}
-                className="card p-6 text-center group overflow-hidden"
+                className="card p-6 text-center bg-white rounded-3xl shadow-xl transition-all duration-300 group overflow-hidden"
               >
                 {/* Avatar */}
                 <div className="relative mb-6">
@@ -140,7 +138,6 @@ const TeamSection: React.FC = () => {
                       alt={member.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        // Fallback to initials if image fails to load
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
                         const fallback = target.nextElementSibling as HTMLElement;
@@ -148,7 +145,7 @@ const TeamSection: React.FC = () => {
                       }}
                     />
                     <div 
-                      className="w-full h-full bg-gradient-to-br from-primary-500 to-primary-700 items-center justify-center text-white font-bold text-xl hidden"
+                      className="w-full h-full bg-gradient-to-br from-deep-navy to-ocean-blue items-center justify-center text-white font-bold text-xl hidden"
                     >
                       {member.name.split(' ').map(n => n[0]).join('')}
                     </div>
@@ -156,9 +153,9 @@ const TeamSection: React.FC = () => {
                 </div>
 
                 {/* Member Info */}
-                <h3 className="text-xl font-bold text-secondary-900 mb-2">{member.name}</h3>
-                <p className="text-primary-600 font-semibold mb-4">{member.role}</p>
-                <p className="text-secondary-600 text-sm leading-relaxed mb-6">{member.bio}</p>
+                <h3 className="text-xl font-bold text-charcoal mb-2">{member.name}</h3>
+                <p className="text-ocean-blue font-semibold mb-4">{member.role}</p>
+                <p className="text-dark-gray text-sm leading-relaxed mb-6">{member.bio}</p>
 
                 {/* Social Links */}
                 <div className="flex items-center justify-center space-x-3">
@@ -189,9 +186,9 @@ const TeamSection: React.FC = () => {
 
           {/* Join Team CTA */}
           <motion.div variants={itemVariants} className="text-center mt-16">
-            <div className="bg-gradient-to-r from-primary-50 to-green-50 rounded-3xl p-12">
-              <h3 className="text-3xl font-bold text-secondary-900 mb-6">Want to Join Our Team?</h3>
-              <p className="text-xl text-secondary-600 mb-8 max-w-2xl mx-auto">
+            <div className="bg-gradient-to-r from-sky-blue to-white rounded-3xl p-12">
+              <h3 className="text-3xl font-bold text-deep-navy mb-6">Want to Join Our Team?</h3>
+              <p className="text-xl text-dark-gray mb-8 max-w-2xl mx-auto">
                 We're always looking for passionate individuals who share our vision of 
                 building a better world through open source technology.
               </p>
@@ -204,7 +201,7 @@ const TeamSection: React.FC = () => {
                     element.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="btn-primary text-lg"
+                className="btn-primary text-lg bg-deep-navy hover:bg-light-blue text-white font-semibold py-3 px-8 rounded-full transition-all duration-300"
               >
                 Get In Touch
               </motion.button>

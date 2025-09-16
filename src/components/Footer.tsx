@@ -72,12 +72,12 @@ const Footer: React.FC = () => {
               viewport={{ once: true }}
             >
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-[#073f70] to-[#1f84d6] rounded-xl flex items-center justify-center">
                   <FaGlobe size={24} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">Open Source World</h3>
-                  <p className="text-primary-400 text-sm">Global Innovation Community</p>
+                  <h3 className="text-xl font-bold text-white">Open Source World</h3>
+                  <p className="text-[#1f84d6] text-sm">Global Innovation Community</p>
                 </div>
               </div>
               
@@ -215,12 +215,12 @@ const Footer: React.FC = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 px-4 py-3 rounded-xl bg-[#f8f9fa] border border-[#073f70] text-[#073f70] placeholder-[#073f70]/60 focus:outline-none focus:ring-2 focus:ring-[#1f84d6]"
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn-primary"
+                className="bg-[#073f70] text-white hover:bg-[#1f84d6] font-bold py-3 px-6 rounded-xl transition-all duration-300 text-lg flex items-center justify-center"
               >
                 <FaEnvelope className="mr-2" />
                 Subscribe
