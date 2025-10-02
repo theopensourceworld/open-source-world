@@ -59,7 +59,11 @@ const Navigation: React.FC = () => {
             </div>
 
             <span className={`font-bold text-xl transition-colors ${
-                isScrolled ? 'text-gray-900' : 'text-white'
+                isScrolled 
+                  ? theme === 'dark' 
+                    ? 'text-white' 
+                    : 'text-gray-900'
+                  : 'text-white'
               }`}>
                 Open Source World
             </span>
@@ -73,7 +77,9 @@ const Navigation: React.FC = () => {
                 whileHover={{ y: -2 }}
                 onClick={() => scrollToSection(item.href)}
                 className={`font-medium transition-colors ${isScrolled
-                  ? 'text-secondary-700 hover:text-primary-600'
+                  ? theme === 'dark'
+                    ? 'text-white hover:text-gray-200'
+                    : 'text-secondary-700 hover:text-primary-600'
                   : 'text-white/90 hover:text-white'
                   }`}
               >
@@ -105,7 +111,11 @@ const Navigation: React.FC = () => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2 rounded-lg ${isScrolled ? 'text-secondary-700' : 'text-white'
+              className={`p-2 rounded-lg ${isScrolled 
+                ? theme === 'dark' 
+                  ? 'text-white' 
+                  : 'text-secondary-700' 
+                : 'text-white'
                 }`}
             >
               {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}

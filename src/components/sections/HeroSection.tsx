@@ -1,8 +1,7 @@
-import React, { use } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaRocket, FaUsers, FaGlobe } from 'react-icons/fa';
 import { itemVariants, containerVariants } from '../../utils/animations';
-import { ThemeProvider } from '../../context/ThemeContext';
 import { useTheme } from '../../context/ThemeContext';
 
 const HeroSection: React.FC = () => {
@@ -13,12 +12,12 @@ const HeroSection: React.FC = () => {
     }
   };
 
-  const {theme, toggleTheme} = useTheme();
+  const {theme} = useTheme();
 
   // Blue gradient hero background
   const heroBackgroundStyle = theme === 'light' 
-    ? 'min-h-screen relative overflow-hidden flex items-center bg-gradient-to-br from-[#073f70] to-[#1f84d6]'
-    : 'min-h-screen relative overflow-hidden flex items-center bg-gradient-to-br from-[#0a0e14] to-[#1a2332]';
+    ? 'min-h-screen relative overflow-hidden flex items-center pt-24 md:pt-32 bg-gradient-to-br from-[#073f70] to-[#1f84d6]'
+    : 'min-h-screen relative overflow-hidden flex items-center pt-24 md:pt-32 bg-gradient-to-br from-[#0a0e14] to-[#1a2332]';
 
   return (
     <section 
