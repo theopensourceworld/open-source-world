@@ -13,7 +13,11 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "framer-motion": "^12.23.12",
+    "nodemailer": "^6.9.14",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
@@ -25,7 +29,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node server.js",
+    "dev": "concurrently \"npm start\" \"npm run server\"",
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +54,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "concurrently": "^8.2.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17"
   }
