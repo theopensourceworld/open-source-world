@@ -30,6 +30,21 @@ declare module 'react-icons/fa' {
   export const FaPhone: IconType;
   export const FaRocket: IconType;
   export const FaArrowRight: IconType;
+  export const FaInstagram: IconType;
+  export const FaDiscord: IconType;
+}
+declare module 'react-icons/si' {
+  import { ComponentType, SVGProps } from 'react';
+  
+  export interface IconBaseProps extends SVGProps<SVGSVGElement> {
+    size?: string | number;
+    color?: string;
+    title?: string;
+  }
+  
+  export type IconType = ComponentType<IconBaseProps>;
+  
+  export const SiDiscord: IconType;
 }
 
 declare module 'react-icons' {

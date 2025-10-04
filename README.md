@@ -189,7 +189,7 @@ We welcome contributions! Here's how you can help:
 ## 📞 Contact & Community
 
 - **Email**: opensourceworld.fyi@gmail.com
-- **GitHub**: [@oathar/open-source-world](https://github.com/oathar/open-source-world)
+- **GitHub**: [open-source-world](https://github.com/theopensourceworld)
 - **LinkedIn**: [Open Source World](https://linkedin.com/company/open-source-world)
 - **Twitter**: [@opensourceworld](https://twitter.com/opensourceworld)
 - **YouTube**: [Open Source World](https://youtube.com/@opensourceworld)

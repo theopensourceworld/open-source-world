@@ -4,44 +4,43 @@ import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 import { itemVariants, containerVariants } from '../../utils/animations';
+import { useTheme } from '../../context/ThemeContext';
 
 const TeamSection: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const { theme } = useTheme();
 
-  // Using properly typed variants from utils
-
-  // Sample team members - you can replace with actual team data
   const teamMembers = [
     {
-      name: "Alex Johnson",
+      name: "Athar Ramzan",
       role: "Founder & CEO",
-      bio: "Passionate about open source and community building. 10+ years of experience in tech leadership.",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
+      bio: "Passionate about open source and community building. Committed to building a more inclusive and diverse tech community.",
+      avatar: "/profiles/athar1.jpg",
       social: {
-        github: "https://github.com",
-        linkedin: "https://linkedin.com",
+        github: "https://github.com/oathar",
+        linkedin: "https://www.linkedin.com/in/athar-ramzan/",
         twitter: "https://twitter.com",
-        email: "alex@opensource-world.org"
+        email: "eatharg@gmail.com"
       }
     },
     {
-      name: "Sarah Chen",
-      role: "CTO",
+      name: "Ayaan Taimur",
+      role: " Co-Founder & CTO",
       bio: "Full-stack developer and open source advocate. Loves building scalable solutions and mentoring developers.",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=300&h=300&fit=crop&crop=face",
+      avatar: "https://avatars.githubusercontent.com/u/183049832?v=4",
       social: {
-        github: "https://github.com",
-        linkedin: "https://linkedin.com",
+        github: "https://github.com/mat1018",
+        linkedin: "https://www.linkedin.com/in/ayaan-taimur/",
         twitter: "https://twitter.com",
-        email: "sarah@opensource-world.org"
+        email: "taimurayaan18@gmail.com"
       }
     },
     {
-      name: "Mohammed Khan",
-      role: "OSK Regional Lead",
-      bio: "Leading the Kashmir initiative. Expert in community outreach and local tech ecosystem development.",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
+      name: "Agam Kundu",
+      role: "Marketing Lead",
+      bio: "Leading the OSW initiative. Expert in community outreach and content creation for tech ecosystem development.",
+      avatar: "/profiles/agam.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
@@ -53,7 +52,7 @@ const TeamSection: React.FC = () => {
       name: "Emily Rodriguez",
       role: "Community Manager",
       bio: "Building bridges between developers worldwide. Passionate about diversity and inclusion in tech.",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face",
+      avatar: "/profiles/emily.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
@@ -65,7 +64,7 @@ const TeamSection: React.FC = () => {
       name: "David Park",
       role: "Lead Developer",
       bio: "Open source enthusiast with expertise in modern web technologies. Contributor to major OSS projects.",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face",
+      avatar: "/profiles/david.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
@@ -77,7 +76,7 @@ const TeamSection: React.FC = () => {
       name: "Priya Sharma",
       role: "Developer Relations",
       bio: "Connecting developers with opportunities. Background in developer advocacy and technical writing.",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop&crop=face",
+      avatar: "/profiles/priya.jpg",
       social: {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
@@ -94,7 +93,7 @@ const TeamSection: React.FC = () => {
       rel="noopener noreferrer"
       whileHover={{ scale: 1.2, y: -2 }}
       whileTap={{ scale: 0.9 }}
-      className="w-10 h-10 bg-gray-100 hover:bg-primary-100 rounded-xl flex items-center justify-center text-gray-600 hover:text-primary-600 transition-all duration-300"
+      className="w-10 h-10 bg-gray-100 hover:bg-primary-100 rounded-xl flex items-center justify-center text-gray-600 hover:text-primary-600 transition-all duration-300 min-w-[44px] min-h-[44px]"
       aria-label={label}
     >
       {icon}
@@ -102,45 +101,44 @@ const TeamSection: React.FC = () => {
   );
 
   return (
-    <section id="team" className="section-padding bg-white">
-      <div className="container-max" ref={ref}>
+    <section id="team" className={theme === 'light'? "section-padding bg-white": "dark: darkbg"}>
+      <div className="container-max px-4" ref={ref}>
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-secondary-900 mb-6">
+          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
+            <h2 className={theme === 'light'? "text-3xl sm:text-4xl font-bold mb-4 text-secondary-900": "text-3xl sm:text-4xl font-bold mb-4 text-white"}>
               Meet Our <span className="text-gradient">Amazing Team</span>
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
+            <p className={theme === 'light'? "text-base sm:text-lg text-secondary-600 max-w-2xl mx-auto": "text-base sm:text-lg text-white max-w-2xl mx-auto"}>
               Passionate individuals working together to build the future of open source collaboration.
               Each bringing unique skills and perspectives to our global mission.
             </p>
           </motion.div>
 
           {/* Team Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {teamMembers.map((member, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -10 }}
-                className="card p-6 text-center group overflow-hidden"
+                className={theme === 'light' ? "card p-4 sm:p-6 text-center group overflow-hidden" :  "card bg-[#444b4a] p-4 sm:p-6 text-center text-white group overflow-hidden"}
               >
                 {/* Avatar */}
-                <div className="relative mb-6">
+                <div className="relative mb-4 sm:mb-6">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
-                    className="w-24 h-24 mx-auto rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300"
+                    className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300"
                   >
                     <img
                       src={member.avatar}
                       alt={member.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        // Fallback to initials if image fails to load
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
                         const fallback = target.nextElementSibling as HTMLElement;
@@ -148,7 +146,7 @@ const TeamSection: React.FC = () => {
                       }}
                     />
                     <div 
-                      className="w-full h-full bg-gradient-to-br from-primary-500 to-primary-700 items-center justify-center text-white font-bold text-xl hidden"
+                      className={theme === 'light' ? "w-full h-full bg-gray-200 flex items-center justify-center text-xl sm:text-2xl font-bold text-gray-600" : "w-full h-full bg-gray-700 flex items-center justify-center text-xl sm:text-2xl font-bold text-white"}
                     >
                       {member.name.split(' ').map(n => n[0]).join('')}
                     </div>
@@ -156,30 +154,30 @@ const TeamSection: React.FC = () => {
                 </div>
 
                 {/* Member Info */}
-                <h3 className="text-xl font-bold text-secondary-900 mb-2">{member.name}</h3>
-                <p className="text-primary-600 font-semibold mb-4">{member.role}</p>
-                <p className="text-secondary-600 text-sm leading-relaxed mb-6">{member.bio}</p>
+                <h3 className={theme === 'light'? 'text-lg sm:text-xl font-bold text-secondary-900 mb-2': "text-lg sm:text-xl font-bold text-white mb-2"}>{member.name}</h3>
+                <p className={theme === 'light'? "text-primary-600 font-semibold mb-3 sm:mb-4 text-sm sm:text-base": "text-gradient font-semibold mb-3 sm:mb-4 text-sm sm:text-base"}>{member.role}</p>
+                <p className={theme === 'light'? "text-secondary-600 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6": "text-white text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6"}>{member.bio}</p>
 
                 {/* Social Links */}
-                <div className="flex items-center justify-center space-x-3">
+                <div className="flex items-center justify-center space-x-2 sm:space-x-3">
                   <SocialLink 
                     href={member.social.github} 
-                    icon={<FaGithub size={18} />}
+                    icon={<FaGithub size={16} />}
                     label={`${member.name}'s GitHub`}
                   />
                   <SocialLink 
                     href={member.social.linkedin} 
-                    icon={<FaLinkedin size={18} />}
+                    icon={<FaLinkedin size={16} />}
                     label={`${member.name}'s LinkedIn`}
                   />
                   <SocialLink 
                     href={member.social.twitter} 
-                    icon={<FaTwitter size={18} />}
+                    icon={<FaTwitter size={16} />}
                     label={`${member.name}'s Twitter`}
                   />
                   <SocialLink 
                     href={`mailto:${member.social.email}`} 
-                    icon={<FaEnvelope size={16} />}
+                    icon={<FaEnvelope size={14} />}
                     label={`Email ${member.name}`}
                   />
                 </div>
@@ -188,10 +186,10 @@ const TeamSection: React.FC = () => {
           </div>
 
           {/* Join Team CTA */}
-          <motion.div variants={itemVariants} className="text-center mt-16">
-            <div className="bg-gradient-to-r from-primary-50 to-green-50 rounded-3xl p-12">
-              <h3 className="text-3xl font-bold text-secondary-900 mb-6">Want to Join Our Team?</h3>
-              <p className="text-xl text-secondary-600 mb-8 max-w-2xl mx-auto">
+          <motion.div variants={itemVariants} className="text-center mt-12 sm:mt-16">
+            <div className={theme === 'light'? "bg-gray-100 p-6 sm:p-8 rounded-2xl inline-block": "dark:darkbg p-6 sm:p-8 rounded-2xl inline-block"}>
+              <h3 className={theme === 'light'? "text-2xl sm:text-3xl font-bold text-secondary-900 mb-4 sm:mb-6": "text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6"}>Want to Join Our Team?</h3>
+              <p className={theme === 'light'? "text-sm sm:text-base text-secondary-600 mb-4 sm:mb-6 max-w-xl mx-auto": "text-sm sm:text-base text-white mb-4 sm:mb-6 max-w-xl mx-auto" }>
                 We're always looking for passionate individuals who share our vision of 
                 building a better world through open source technology.
               </p>
@@ -204,7 +202,7 @@ const TeamSection: React.FC = () => {
                     element.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="btn-primary text-lg"
+                className="btn-primary text-base sm:text-lg min-h-[48px] px-6"
               >
                 Get In Touch
               </motion.button>

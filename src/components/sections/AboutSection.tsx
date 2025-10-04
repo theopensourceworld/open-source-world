@@ -1,139 +1,112 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { FaCode, FaUsers, FaGlobe, FaHeart, FaMountain, FaHandshake } from 'react-icons/fa';
-import { itemVariants, containerVariants } from '../../utils/animations';
+import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { FaCode, FaUsers, FaGlobe } from "react-icons/fa";
+import { itemVariants, containerVariants } from "../../utils/animations";
+import { useTheme } from "../../context/ThemeContext";
 
 const AboutSection: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-
-  // Using properly typed variants from utils
+  const { theme } = useTheme();
 
   const features = [
     {
       icon: FaCode,
       title: "Open Source First",
-      description: "We believe in the power of open source software to drive innovation and collaboration across the globe."
+      description:
+        "We believe in the power of open source software to drive innovation and collaboration across the globe.",
     },
     {
       icon: FaUsers,
       title: "Global Community",
-      description: "Connect with developers, designers, and tech enthusiasts from every corner of the world."
+      description:
+        "Connect with developers, designers, and tech enthusiasts from every corner of the world.",
     },
     {
       icon: FaGlobe,
       title: "Worldwide Impact",
-      description: "Our projects and initiatives span across continents, making a real difference in communities everywhere."
-    }
+      description:
+        "Our projects and initiatives span across continents, making a real difference in communities everywhere.",
+    },
   ];
 
-  const oskFeatures = [
-    {
-      icon: FaMountain,
-      title: "Kashmir Focus",
-      description: "Dedicated to promoting open source culture and development opportunities in the Kashmir region."
-    },
-    {
-      icon: FaHandshake,
-      title: "Local Partnerships",
-      description: "Building strong relationships with local institutions, universities, and tech communities."
-    },
-    {
-      icon: FaHeart,
-      title: "Community Support",
-      description: "Providing mentorship, resources, and opportunities for local developers to thrive."
-    }
-  ];
+  const sectionBg =
+    theme === "light"
+      ? "section-padding bg-gradient-to-br from-[#f8fafc] to-[#e8f4fd]"
+      : "section-padding bg-gradient-to-br from-[#0a0e14] to-[#1a2332]";
+
+  const cardBg =
+    theme === "light"
+      ? "bg-white shadow-lg hover:shadow-xl border border-[#e2e8f0]"
+      : "bg-[#1a2332] shadow-lg hover:shadow-2xl border border-[#334155]";
+
+  const textPrimary = theme === "light" ? "text-[#1a2332]" : "text-white";
+  const textSecondary = theme === "light" ? "text-[#64748b]" : "text-[#94a3b8]";
+  const textGradient =
+    "bg-gradient-to-r from-[#1f84d6] to-[#3b9df0] bg-clip-text text-transparent";
 
   return (
-    <section id="about" className="section-padding bg-gradient-to-br from-gray-50 to-white">
-      <div className="container-max" ref={ref}>
+    <section id='about' className={sectionBg}>
+      <div className='container-max px-4' ref={ref}>
         <motion.div
           variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+          initial='hidden'
+          animate={isInView ? "visible" : "hidden"}>
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-secondary-900 mb-6">
-              About <span className="text-gradient">Open Source World</span>
+          <motion.div
+            variants={itemVariants}
+            className='text-center mb-12 sm:mb-16'>
+            <h2
+              className={`text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 ${textPrimary}`}>
+              About <span className={textGradient}>Open Source World</span>
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
-              A global initiative connecting developers, fostering innovation, and building 
-              the future of technology through open source collaboration.
+            <p
+              className={`text-base sm:text-xl max-w-3xl mx-auto leading-relaxed ${textSecondary}`}>
+              A global initiative connecting developers, fostering innovation,
+              and building the future of technology through open source
+              collaboration.
             </p>
           </motion.div>
 
           {/* OSW Features */}
-          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          <motion.div
+            variants={itemVariants}
+            className='grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20'>
             {features.map((feature, index) => (
               <motion.div
                 key={index}
                 whileHover={{ y: -10, scale: 1.02 }}
-                className="card p-8 text-center group"
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white text-2xl group-hover:shadow-xl transition-all duration-300">
+                className={`${cardBg} p-6 sm:p-8 text-center group rounded-2xl transition-all duration-300`}>
+                <div className='w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-[#1f84d6] to-[#073f70] rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 text-white text-xl sm:text-2xl group-hover:shadow-xl transition-all duration-300'>
                   <feature.icon />
                 </div>
-                <h3 className="text-2xl font-bold text-secondary-900 mb-4">{feature.title}</h3>
-                <p className="text-secondary-600 leading-relaxed">{feature.description}</p>
+                <h3
+                  className={`text-xl sm:text-2xl font-bold mb-3 sm:mb-4 ${textPrimary}`}>
+                  {feature.title}
+                </h3>
+                <p
+                  className={`text-sm sm:text-base leading-relaxed ${textSecondary}`}>
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* OSK Section */}
-          <motion.div variants={itemVariants} className="bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-100">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl sm:text-4xl font-bold text-secondary-900 mb-6">
-                Meet <span className="text-gradient">Open Source Kashmir</span>
-              </h3>
-              <p className="text-lg text-secondary-600 max-w-2xl mx-auto leading-relaxed">
-                Our regional branch focused on nurturing open source talent and creating 
-                opportunities in the beautiful Kashmir valley and surrounding regions.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {oskFeatures.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ y: -5 }}
-                  className="text-center group"
-                >
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl flex items-center justify-center mx-auto mb-4 text-primary-600 text-xl group-hover:shadow-lg transition-all duration-300">
-                    <feature.icon />
-                  </div>
-                  <h4 className="text-xl font-bold text-secondary-900 mb-3">{feature.title}</h4>
-                  <p className="text-secondary-600 text-sm leading-relaxed">{feature.description}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Connection Section */}
-            <div className="text-center p-8 bg-gradient-to-r from-primary-50 to-green-50 rounded-2xl">
-              <h4 className="text-2xl font-bold text-secondary-900 mb-4">
-                How OSK Connects with OSW
-              </h4>
-              <p className="text-secondary-700 leading-relaxed max-w-3xl mx-auto">
-                Open Source Kashmir serves as a vital regional hub within the Open Source World ecosystem. 
-                While OSW operates on a global scale, OSK focuses on grassroots development, 
-                local talent nurturing, and region-specific initiatives that contribute to the larger 
-                global open source movement. Together, we're building bridges between local communities 
-                and worldwide opportunities.
-              </p>
-            </div>
-          </motion.div>
-
           {/* Mission Statement */}
-          <motion.div variants={itemVariants} className="text-center mt-16">
-            <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-3xl p-12 text-white">
-              <h3 className="text-3xl font-bold mb-6">Our Mission</h3>
-              <p className="text-xl leading-relaxed max-w-4xl mx-auto">
-                To democratize technology education, foster innovation through collaboration, 
-                and create sustainable opportunities for developers worldwide while maintaining 
-                strong local roots and global perspectives.
+          <motion.div
+            variants={itemVariants}
+            className='text-center mt-12 sm:mt-16'>
+            <div className='bg-gradient-to-r from-[#073f70] to-[#1f84d6] rounded-3xl p-8 sm:p-12 text-white shadow-2xl'>
+              <h3 className='text-2xl sm:text-3xl font-bold mb-4 sm:mb-6'>
+                Our Mission
+              </h3>
+              <p className='text-base sm:text-xl leading-relaxed max-w-4xl mx-auto'>
+                To democratize technology education, foster innovation through
+                collaboration, and create sustainable opportunities for
+                developers worldwide while maintaining strong local roots and
+                global perspectives.
               </p>
             </div>
           </motion.div>
