@@ -43,6 +43,7 @@ const CTABanner: React.FC = () => {
   return (
     <section
       className={theme === "light" ? "py-16 bg-gray-50" : "py-16 dark: darkbg"}
+      id="initiatives"
     >
       <div className="container-max" ref={ref}>
         <motion.div
