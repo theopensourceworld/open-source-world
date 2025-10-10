@@ -1,10 +1,10 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
-import { itemVariants, containerVariants } from '../../utils/animations';
-import { useTheme } from '../../context/ThemeContext';
+import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
+import { itemVariants, containerVariants } from "../../utils/animations";
+import { useTheme } from "../../context/ThemeContext";
 
 const TeamSection: React.FC = () => {
   const ref = useRef(null);
@@ -21,8 +21,8 @@ const TeamSection: React.FC = () => {
         github: "https://github.com/oathar",
         linkedin: "https://www.linkedin.com/in/athar-ramzan/",
         twitter: "https://twitter.com",
-        email: "eatharg@gmail.com"
-      }
+        email: "eatharg@gmail.com",
+      },
     },
     {
       name: "Ayaan Taimur",
@@ -33,8 +33,8 @@ const TeamSection: React.FC = () => {
         github: "https://github.com/mat1018",
         linkedin: "https://www.linkedin.com/in/ayaan-taimur/",
         twitter: "https://twitter.com",
-        email: "taimurayaan18@gmail.com"
-      }
+        email: "taimurayaan18@gmail.com",
+      },
     },
     {
       name: "Agam Kundu",
@@ -45,8 +45,8 @@ const TeamSection: React.FC = () => {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
-        email: "mohammed@opensource-kashmir.org"
-      }
+        email: "mohammed@opensource-kashmir.org",
+      },
     },
     {
       name: "Emily Rodriguez",
@@ -57,8 +57,8 @@ const TeamSection: React.FC = () => {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
-        email: "emily@opensource-world.org"
-      }
+        email: "emily@opensource-world.org",
+      },
     },
     {
       name: "David Park",
@@ -69,8 +69,8 @@ const TeamSection: React.FC = () => {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
-        email: "david@opensource-world.org"
-      }
+        email: "david@opensource-world.org",
+      },
     },
     {
       name: "Priya Sharma",
@@ -81,12 +81,20 @@ const TeamSection: React.FC = () => {
         github: "https://github.com",
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
-        email: "priya@opensource-world.org"
-      }
-    }
+        email: "priya@opensource-world.org",
+      },
+    },
   ];
 
-  const SocialLink = ({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) => (
+  const SocialLink = ({
+    href,
+    icon,
+    label,
+  }: {
+    href: string;
+    icon: React.ReactNode;
+    label: string;
+  }) => (
     <motion.a
       href={href}
       target="_blank"
@@ -101,7 +109,14 @@ const TeamSection: React.FC = () => {
   );
 
   return (
-    <section id="team" className={theme === 'light'? "section-padding bg-white": "dark: darkbg"}>
+    <section
+      id="team"
+      className={
+        theme === "light"
+          ? "section-padding bg-white"
+          : "dark: section-padding darkbg"
+      }
+    >
       <div className="container-max px-4" ref={ref}>
         <motion.div
           variants={containerVariants}
@@ -109,13 +124,29 @@ const TeamSection: React.FC = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
-            <h2 className={theme === 'light'? "text-3xl sm:text-4xl font-bold mb-4 text-secondary-900": "text-3xl sm:text-4xl font-bold mb-4 text-white"}>
+          <motion.div
+            variants={itemVariants}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2
+              className={
+                theme === "light"
+                  ? "text-3xl sm:text-4xl font-bold mb-4 text-secondary-900"
+                  : "text-3xl sm:text-4xl font-bold mb-4 text-white"
+              }
+            >
               Meet Our <span className="text-gradient">Amazing Team</span>
             </h2>
-            <p className={theme === 'light'? "text-base sm:text-lg text-secondary-600 max-w-2xl mx-auto": "text-base sm:text-lg text-white max-w-2xl mx-auto"}>
-              Passionate individuals working together to build the future of open source collaboration.
-              Each bringing unique skills and perspectives to our global mission.
+            <p
+              className={
+                theme === "light"
+                  ? "text-base sm:text-lg text-secondary-600 max-w-2xl mx-auto"
+                  : "text-base sm:text-lg text-white max-w-2xl mx-auto"
+              }
+            >
+              Passionate individuals working together to build the future of
+              open source collaboration. Each bringing unique skills and
+              perspectives to our global mission.
             </p>
           </motion.div>
 
@@ -126,7 +157,11 @@ const TeamSection: React.FC = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -10 }}
-                className={theme === 'light' ? "card p-4 sm:p-6 text-center group overflow-hidden" :  "card bg-[#444b4a] p-4 sm:p-6 text-center text-white group overflow-hidden"}
+                className={
+                  theme === "light"
+                    ? "card p-4 sm:p-6 text-center group overflow-hidden"
+                    : "card bg-[#444b4a] p-4 sm:p-6 text-center text-white group overflow-hidden"
+                }
               >
                 {/* Avatar */}
                 <div className="relative mb-4 sm:mb-6">
@@ -140,43 +175,75 @@ const TeamSection: React.FC = () => {
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallback = target.nextElementSibling as HTMLElement;
-                        if (fallback) fallback.style.display = 'flex';
+                        target.style.display = "none";
+                        const fallback =
+                          target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = "flex";
                       }}
                     />
-                    <div 
-                      className={theme === 'light' ? "w-full h-full bg-gray-200 flex items-center justify-center text-xl sm:text-2xl font-bold text-gray-600" : "w-full h-full bg-gray-700 flex items-center justify-center text-xl sm:text-2xl font-bold text-white"}
+                    <div
+                      className={
+                        theme === "light"
+                          ? "w-full h-full bg-gray-200 flex items-center justify-center text-xl sm:text-2xl font-bold text-gray-600"
+                          : "w-full h-full bg-gray-700 flex items-center justify-center text-xl sm:text-2xl font-bold text-white"
+                      }
                     >
-                      {member.name.split(' ').map(n => n[0]).join('')}
+                      {member.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
                     </div>
                   </motion.div>
                 </div>
 
                 {/* Member Info */}
-                <h3 className={theme === 'light'? 'text-lg sm:text-xl font-bold text-secondary-900 mb-2': "text-lg sm:text-xl font-bold text-white mb-2"}>{member.name}</h3>
-                <p className={theme === 'light'? "text-primary-600 font-semibold mb-3 sm:mb-4 text-sm sm:text-base": "text-gradient font-semibold mb-3 sm:mb-4 text-sm sm:text-base"}>{member.role}</p>
-                <p className={theme === 'light'? "text-secondary-600 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6": "text-white text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6"}>{member.bio}</p>
+                <h3
+                  className={
+                    theme === "light"
+                      ? "text-lg sm:text-xl font-bold text-secondary-900 mb-2"
+                      : "text-lg sm:text-xl font-bold text-white mb-2"
+                  }
+                >
+                  {member.name}
+                </h3>
+                <p
+                  className={
+                    theme === "light"
+                      ? "text-primary-600 font-semibold mb-3 sm:mb-4 text-sm sm:text-base"
+                      : "text-gradient font-semibold mb-3 sm:mb-4 text-sm sm:text-base"
+                  }
+                >
+                  {member.role}
+                </p>
+                <p
+                  className={
+                    theme === "light"
+                      ? "text-secondary-600 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6"
+                      : "text-white text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6"
+                  }
+                >
+                  {member.bio}
+                </p>
 
                 {/* Social Links */}
                 <div className="flex items-center justify-center space-x-2 sm:space-x-3">
-                  <SocialLink 
-                    href={member.social.github} 
+                  <SocialLink
+                    href={member.social.github}
                     icon={<FaGithub size={16} />}
                     label={`${member.name}'s GitHub`}
                   />
-                  <SocialLink 
-                    href={member.social.linkedin} 
+                  <SocialLink
+                    href={member.social.linkedin}
                     icon={<FaLinkedin size={16} />}
                     label={`${member.name}'s LinkedIn`}
                   />
-                  <SocialLink 
-                    href={member.social.twitter} 
+                  <SocialLink
+                    href={member.social.twitter}
                     icon={<FaTwitter size={16} />}
                     label={`${member.name}'s Twitter`}
                   />
-                  <SocialLink 
-                    href={`mailto:${member.social.email}`} 
+                  <SocialLink
+                    href={`mailto:${member.social.email}`}
                     icon={<FaEnvelope size={14} />}
                     label={`Email ${member.name}`}
                   />
@@ -186,20 +253,44 @@ const TeamSection: React.FC = () => {
           </div>
 
           {/* Join Team CTA */}
-          <motion.div variants={itemVariants} className="text-center mt-12 sm:mt-16">
-            <div className={theme === 'light'? "bg-gray-100 p-6 sm:p-8 rounded-2xl inline-block": "dark:darkbg p-6 sm:p-8 rounded-2xl inline-block"}>
-              <h3 className={theme === 'light'? "text-2xl sm:text-3xl font-bold text-secondary-900 mb-4 sm:mb-6": "text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6"}>Want to Join Our Team?</h3>
-              <p className={theme === 'light'? "text-sm sm:text-base text-secondary-600 mb-4 sm:mb-6 max-w-xl mx-auto": "text-sm sm:text-base text-white mb-4 sm:mb-6 max-w-xl mx-auto" }>
-                We're always looking for passionate individuals who share our vision of 
-                building a better world through open source technology.
+          <motion.div
+            variants={itemVariants}
+            className="text-center mt-12 sm:mt-16"
+          >
+            <div
+              className={
+                theme === "light"
+                  ? "bg-gray-100 p-6 sm:p-8 rounded-2xl inline-block"
+                  : "dark:darkbg p-6 sm:p-8 rounded-2xl inline-block"
+              }
+            >
+              <h3
+                className={
+                  theme === "light"
+                    ? "text-2xl sm:text-3xl font-bold text-secondary-900 mb-4 sm:mb-6"
+                    : "text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6"
+                }
+              >
+                Want to Join Our Team?
+              </h3>
+              <p
+                className={
+                  theme === "light"
+                    ? "text-sm sm:text-base text-secondary-600 mb-4 sm:mb-6 max-w-xl mx-auto"
+                    : "text-sm sm:text-base text-white mb-4 sm:mb-6 max-w-xl mx-auto"
+                }
+              >
+                We're always looking for passionate individuals who share our
+                vision of building a better world through open source
+                technology.
               </p>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
-                  const element = document.querySelector('#contact');
+                  const element = document.querySelector("#contact");
                   if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
+                    element.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
                 className="btn-primary text-base sm:text-lg min-h-[48px] px-6"
