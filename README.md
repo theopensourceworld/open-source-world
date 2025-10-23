@@ -195,6 +195,7 @@ We welcome contributions — please read [`CONTRIBUTING.md`](./CONTRIBUTING.md) 
 - **LinkedIn**: [Open Source World](https://linkedin.com/company/open-source-world)
 - **Twitter**: [@opensourceworld](https://twitter.com/opensourceworld)
 - **YouTube**: [Open Source World](https://youtube.com/@opensourceworld)
+- **Discord**: [Join our community](https://discord.gg/hgnUsqAmMT)
 
 ## 📄 License
 
