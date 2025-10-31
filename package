@@ -1,0 +1,61 @@
+{
+  "name": "open-source-world",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A modern React + TypeScript + Tailwind open-source project.",
+  "author": "Your Name",
+  "license": "MIT",
+  "keywords": ["react", "typescript", "tailwindcss", "frontend", "open-source"],
+  "scripts": {
+    "dev": "react-scripts start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "lint": "eslint 'src/**/*.{ts,tsx}' --quiet",
+    "format": "prettier --write 'src/**/*.{ts,tsx,css,md,json}'",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "@fortawesome/fontawesome-svg-core": "^7.0.1",
+    "@fortawesome/react-fontawesome": "^3.0.2",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.544.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.9.4",
+    "typescript": "^5.6.3",
+    "web-vitals": "^3.5.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.5.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.7.4",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.36.1",
+    "postcss": "^8.5.6",
+    "prettier": "^3.4.0",
+    "tailwindcss": "^3.4.17",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.3.0"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest", "prettier"]
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx,css,json,md}": ["prettier --write", "eslint --fix"]
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 2 chrome versions", "last 2 firefox versions", "last 2 safari versions"]
+  }
+}
