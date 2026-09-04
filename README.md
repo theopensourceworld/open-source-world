@@ -188,6 +188,51 @@ We welcome contributions — please read [`CONTRIBUTING.md`](./CONTRIBUTING.md) 
 - Ensure accessibility standards
 - Test on multiple devices/browsers
 
+## 💡 Ideas for Contributors
+
+Looking for a place to start? Here are **15 project ideas** — pick one, open an issue to claim it, and get your first PR merged. Most are beginner-friendly and eligible for `hacktoberfest-accepted` (see [`CONTRIBUTING.md`](./CONTRIBUTING.md)).
+
+### 🟢 Beginner
+
+1. **Fix "good first issue" bugs** — Squash small bugs tagged `good-first-issue` (broken images, spacing issues on small screens, typos). Great for your first PR.
+   - *Files*: any component; check Issues tab.
+2. **Add a 404 page** — Design an on-brand "page not found" screen that matches the OSW design system (cream background, brand orange, Fraunces headings) and hook it up as a fallback route.
+   - *Files*: `src/pages/`, `src/App.tsx`.
+3. **Improve dark mode** — Audit every page in dark theme and fix any hard-coded light colors or low-contrast text. Ensure nothing looks broken when `darkMode: 'class'` is active.
+   - *Files*: all components; check `src/context/ThemeContext.tsx`.
+4. **Polish the design system** — Extract repeated markup (buttons, inputs, tags) into reusable `Button`, `Card`, and `Input` components, extending the classes already defined in `src/index.css`.
+   - *Files*: `src/components/`, `src/index.css`, `tailwind.config.js`.
+5. **Add a language switcher (i18n)** — Set up `react-i18next` and translate the site into one new language (Hindi, Urdu, Arabic...). Keep the English default.
+   - *Files*: `src/` entry, `src/components/`.
+
+### 🟡 Intermediate
+
+6. **Add a Projects community section** — New `ProjectsSection` that showcases community repos as cards. Bonus: fetch live repo data from the GitHub API (`/orgs/theopensourceworld/repos`).
+   - *Files*: `src/components/sections/`, `src/pages/HomePage.tsx`.
+7. **Write component tests** — Add React Testing Library + Jest test suites for Navigation, Footer, ContactSection (validation + EmailJS mock), and HeroSection.
+   - *Files*: `src/components/**`, `src/App.test.tsx`.
+8. **SEO & structured data** — Add JSON-LD (Org/Website schema), richer Open Graph tags, a `sitemap.xml`, and `robots.txt` for better search visibility.
+   - *Files*: `public/index.html`, `public/`.
+9. **Performance pass** — Lazy-load below-the-fold sections with `React.lazy`, add `loading="lazy"` to images, and inspect the production bundle for size wins.
+   - *Files*: `src/`, `public/`.
+10. **Newsletter & contact form upgrades** — Add a honeypot field, a GDPR-friendly consent checkbox, rate limiting, and a friendly success redirect for both the form and the footer newsletter.
+    - *Files*: `src/components/sections/ContactSection.tsx`, `src/components/Footer.tsx`.
+11. **Accessibility audit** — Run axe/Lighthouse, then implement fixes: skip-to-content link, `aria-live` form status, focus-visible styles, and keyboard-only navigation checks.
+    - *Files*: `src/index.css`, `src/components/`.
+
+### 🔴 Advanced
+
+12. **Live community stats** — Build a stats bar that reads real numbers (contributors, stars, open PRs) from the GitHub API instead of hard-coded counts.
+    - *Files*: `src/pages/HomePage.tsx`, new hook under `src/utils/`.
+13. **Motion & page transitions** — Add direction-aware entrance animations, scroll-triggered reveals (already partly in `src/index.css` via `.stagger`), and route transitions with Framer Motion.
+    - *Files*: `src/`, `src/utils/animations.ts`.
+14. **CI/CD pipeline** — Add GitHub Actions: lint + typecheck + test on every PR, auto-build previews on Vercel/Netlify, and Dependabot for dependency updates.
+    - *Files*: `.github/workflows/`.
+15. **Team page features** — Add search/filter by skill (already started with category filters), mentor-availability badges, or drive members from a `contributors.json` data file.
+    - *Files*: `src/pages/TeamPage.tsx`, `src/components/sections/TeamSection.tsx`.
+
+> **How to claim an idea**: open an issue with the idea title, mention you're working on it, and reference the issue in your PR. Unsure how to pick? Reach out on [Discord](https://discord.gg/hgnUsqAmMT) — maintainers are happy to mentor your first contribution.
+
 ## 📞 Contact & Community
 
 - **Email**: opensourceworld.fyi@gmail.com
