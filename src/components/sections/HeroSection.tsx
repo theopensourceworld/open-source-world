@@ -1,182 +1,133 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { FaGithub, FaRocket, FaUsers, FaGlobe } from "react-icons/fa";
-import { itemVariants, containerVariants } from "../../utils/animations";
-import { useTheme } from "../../context/ThemeContext";
+import { ArrowRight, Users, Quote, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection: React.FC = () => {
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const { theme } = useTheme();
-
-  // Blue gradient hero background
-  const heroBackgroundStyle =
-    theme === "light"
-      ? "min-h-screen relative overflow-hidden flex items-center bg-gradient-to-br from-[#073f70] to-[#1f84d6]"
-      : "min-h-screen relative overflow-hidden flex items-center bg-gradient-to-br from-[#0a0e14] to-[#1a2332]";
+  const navigate = useNavigate();
 
   return (
-    <section id='hero' className={heroBackgroundStyle}>
-      {/* Background Animation */}
-      <div className='absolute inset-0'>
-        <motion.div
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 100%"],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-          className='absolute inset-0 opacity-10'
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+    <section className="relative overflow-hidden border-b-4 border-brand pt-16">
+      {/* Background blobs */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-20 right-0 h-80 w-80 -rotate-12 rounded-full bg-brand-lighter blur-3xl dark:bg-brand/10" />
+        <div className="absolute bottom-0 -left-20 h-80 w-80 rotate-12 rounded-full bg-emerald-100 blur-3xl dark:bg-forest/10" />
+        <div className="absolute top-1/3 right-1/4 h-40 w-40 rounded-full bg-sky-100 blur-2xl" />
       </div>
 
-      {/* Floating Elements */}
-      <div className='absolute inset-0'>
-        <motion.div
-          animate={{
-            y: [-20, 20, -20],
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className='absolute top-20 left-10 w-16 h-16 bg-white/10 rounded-2xl backdrop-blur-sm'
-        />
-        <motion.div
-          animate={{
-            y: [20, -20, 20],
-            rotate: [0, -360],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className='absolute top-40 right-16 w-12 h-12 bg-white/10 rounded-full backdrop-blur-sm'
-        />
-        <motion.div
-          animate={{
-            y: [-15, 15, -15],
-            x: [-10, 10, -10],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className='absolute bottom-40 left-20 w-20 h-20 bg-white/10 rounded-3xl backdrop-blur-sm'
-        />
-      </div>
+      <div className="container-page grid items-center gap-14 py-16 sm:py-24 lg:grid-cols-2">
+        {/* Copy */}
+        <div className="animate-fade-up">
+          <span className="tag">
+            <Sparkles size={13} className="text-brand" />
+            A global community for everyone
+          </span>
 
-      <div className='container-max relative z-10'>
-        <motion.div
-          variants={containerVariants}
-          initial='hidden'
-          animate='visible'
-          className='text-center text-white mt-10'>
-          {/* Main Logo */}
-          <motion.div
-            variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            className='w-24 h-24 bg-gradient-to-br from-[#3b9df0] to-[#1f84d6] rounded-xl flex items-center justify-center mx-auto mt-20 mb-6 shadow-lg cursor-pointer'>
-            <FaGlobe size={64} className='text-white' />
-          </motion.div>
+          <h1 className="mt-6 font-display text-5xl font-black leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+            Open source,{" "}
+            <span className="underline-brush text-brand">made for</span>{" "}
+            the world
+          </h1>
 
-          {/* Headline */}
-          <motion.h1
-            variants={itemVariants}
-            className='text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight'>
-            Open Source
-            <br />
-            <span className='text-transparent bg-clip-text bg-gradient-to-r from-white to-[#e8f4fd]'>
-              World
-            </span>
-          </motion.h1>
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+            Whether you&apos;re fixing your first typo or leading your first
+            project, you&apos;ve got a home here. Learn, collaborate, and
+            contribute with a global community that&apos;s got your back.
+          </p>
 
-          {/* Tagline */}
-          <motion.p
-            variants={itemVariants}
-            className='text-lg sm:text-xl lg:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed'>
-            Connecting developers worldwide through open source collaboration.
-            Join our global community and contribute to projects that matter.
-          </motion.p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <button onClick={() => {
+              const el = document.getElementById("about");
+              el?.scrollIntoView({ behavior: "smooth" });
+            }} className="btn-primary">
+              Learn more
+              <ArrowRight size={17} />
+            </button>
+            <button onClick={() => navigate("/team")} className="btn-secondary">
+              Meet the team
+            </button>
+            <a
+              href="https://github.com/theopensourceworld"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost"
+            >
+              View on GitHub
+            </a>
+          </div>
 
-          {/* Stats */}
-          <motion.div
-            variants={itemVariants}
-            className='flex flex-wrap justify-center gap-6 sm:gap-8 mb-12'>
-            <div className='flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-2xl px-4 py-2'>
-              <FaUsers className='text-[#e8f4fd]' />
-              <span className='font-semibold'>500+ Contributors</span>
+          {/* Social proof */}
+          <div className="mt-10 flex items-center gap-4">
+            <div className="flex -space-x-3">
+              {["AS", "AY", "AK", "RA", "MK"].map((initials, i) => (
+                <div
+                  key={i}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-brand-lighter text-xs font-bold text-brand dark:border-night dark:bg-stone-700 dark:text-stone-200"
+                >
+                  {initials}
+                </div>
+              ))}
             </div>
-            <div className='flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-2xl px-4 py-2'>
-              <FaGithub className='text-[#e8f4fd]' />
-              <span className='font-semibold'>100+ Projects</span>
+            <div className="text-sm">
+              <p className="flex items-center gap-1 font-bold text-stone-900 dark:text-white">
+                1000+ members
+              </p>
+              <p className="text-stone-500 dark:text-stone-400">
+                building together across 50+ countries
+              </p>
             </div>
-            <div className='flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-2xl px-4 py-2'>
-              <FaRocket className='text-[#e8f4fd]' />
-              <span className='font-semibold'>50+ Countries</span>
+          </div>
+        </div>
+
+        {/* Visual - sticky note collage */}
+        <div className="animate-fade-up hidden lg:block">
+          <div className="relative mx-auto max-w-md">
+            {/* OSW sticker */}
+            <div className="rotate-3 rounded-xl bg-brand p-6 text-white shadow-lift animate-float">
+              <p className="font-display text-2xl font-black">OSW</p>
+              <p className="mt-1 text-sm text-white/85">
+                Your open source home, worldwide
+              </p>
+              <div className="mt-4 grid grid-cols-3 gap-2">
+                {["Learn", "Build", "Ship"].map((w) => (
+                  <div
+                    key={w}
+                    className="rounded-lg bg-white/15 text-center text-sm font-bold"
+                  >
+                    {w}
+                  </div>
+                ))}
+              </div>
             </div>
-          </motion.div>
 
-          {/* CTA Buttons */}
-          <motion.div
-            variants={itemVariants}
-            className='flex flex-col sm:flex-row items-center justify-center gap-4 mb-12'>
-            <motion.button
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => scrollToSection("#about")}
-              className='
-                    bg-white text-[#073f70] 
-                    hover:bg-[#e8f4fd] hover:text-[#073f70] 
+            {/* Quote sticky note */}
+            <div className="absolute -bottom-6 -left-10 w-52 -rotate-6 rounded-lg bg-yellow-200 p-4 shadow-lift dark:bg-yellow-300 dark:text-stone-900 animate-wiggle">
+              <Quote size={18} className="opacity-40" />
+              <p className="mt-1 font-display text-sm font-semibold leading-snug">
+                &ldquo;Got my first PR merged in a day.&rdquo;
+              </p>
+              <p className="mt-2 text-xs font-bold opacity-70">
+                — first-time contributor
+              </p>
+            </div>
 
-                    dark:bg-[#073f70] dark:text-white 
-                    dark:hover:bg-[#1f84d6] dark:hover:text-white 
+            {/* Stats sticker */}
+            <div className="absolute -top-4 -right-6 rotate-3 rounded-lg bg-white p-4 shadow-lift dark:bg-stone-800">
+              <div className="flex items-center gap-2">
+                <Users size={18} className="text-brand" />
+                <p className="text-sm font-bold text-stone-900 dark:text-white">
+                  100+ open source projects
+                </p>
+              </div>
+            </div>
 
-                    font-bold py-4 px-8 rounded-2xl 
-                    transition-all duration-300 shadow-xl text-lg
-                  '>
-              Learn More
-            </motion.button>
-            <motion.button
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(255,255,255,0.2)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => window.open("https://discord.gg/hgnUsqAmMT", "_blank")}
-              className="bg-transparent border-2 border-white text-white hover:bg-indigo-600 hover:border-indigo-600 font-bold py-4 px-8 rounded-2xl transition-all duration-300 text-lg">
-              Join Community
-            </motion.button>
-          </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            variants={itemVariants}
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className='flex flex-col items-center text-white/70'>
-            <span className='text-sm mb-2'>Scroll to explore</span>
-            <div className='w-px h-12 bg-gradient-to-b from-white/50 to-transparent'></div>
-          </motion.div>
-        </motion.div>
+            {/* Small accent sticker */}
+            <div className="absolute top-1/2 -left-8 hidden -rotate-2 rounded-lg bg-emerald-100 px-4 py-2 shadow-lift dark:bg-emerald-900/30 sm:block">
+              <p className="font-display text-sm font-bold text-forest dark:text-emerald-300">
+                Hacktoberfest-ready
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

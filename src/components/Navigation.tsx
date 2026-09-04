@@ -1,368 +1,161 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Moon, Sun, Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate, useLocation } from "react-router-dom";
-
-import "../index.css";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, ArrowUpRight, Moon, Sun } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 
+const NAV_LINKS = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
+  { label: "Team", to: "/team" },
+];
+
 const Navigation: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const navigate = useNavigate();
   const location = useLocation();
-  
-  // Refs for accessibility and focus management
-  const lastFocusedRef = useRef<HTMLElement | null>(null);
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navItems = [
-    { name: "Home", href: "/", type: "route" },
-    { name: "About", href: "/about", type: "route" },
-    { name: "Team", href: "/team", type: "route" },
-    { name: "Contact", href: "/#contact", type: "scroll" },
-  ];
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
+  const isActive = (to: string) =>
+    to === "/" ? location.pathname === "/" : location.pathname.startsWith(to);
 
-  const toggleMobileMenu = () => {
-    if (!isMobileMenuOpen) {
-      // opening: store last focused element to restore later
-      lastFocusedRef.current = document.activeElement as HTMLElement | null;
-    }
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const scrollToSection = (href: string) => {
-    // Handle hash-based navigation
-    if (href.startsWith('/#')) {
-      const hash = href.substring(2);
-      if (location.pathname !== '/') {
-        navigate('/');
-        setTimeout(() => {
-          const element = document.querySelector(`#${hash}`);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 100);
-      } else {
-        const element = document.querySelector(`#${hash}`);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }
-    } else if (href.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+  const scrollToContact = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     } else {
-      // Route navigation
-      navigate(href);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
     }
-    closeMobileMenu();
+    setIsMenuOpen(false);
   };
-
-  // Close mobile menu on window resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Accessibility: focus trap and Escape to close when mobile menu is open
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-
-    // lock body scroll
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    // focus the close button (if present) after menu opens
-    const focusTimer = setTimeout(() => {
-      if (closeButtonRef.current) closeButtonRef.current.focus();
-      else if (menuRef.current) menuRef.current.focus();
-    }, 50);
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        setIsMobileMenuOpen(false);
-        return;
-      }
-
-      if (e.key === "Tab") {
-        // trap focus inside menu
-        const menuNode = menuRef.current;
-        if (!menuNode) return;
-        const focusable = Array.from(
-          menuNode.querySelectorAll<HTMLElement>(
-            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-          )
-        ).filter((el) => !el.hasAttribute("disabled"));
-
-        if (focusable.length === 0) {
-          e.preventDefault();
-          menuNode.focus();
-          return;
-        }
-
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-
-        if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      clearTimeout(focusTimer);
-      window.removeEventListener("keydown", handleKeyDown);
-      // restore body scroll
-      document.body.style.overflow = prevOverflow || "";
-      // restore focus to last focused element
-      if (lastFocusedRef.current) {
-        try {
-          lastFocusedRef.current.focus();
-        } catch (err) {
-          /* ignore */
-        }
-      }
-    };
-  }, [isMobileMenuOpen]);
 
   return (
-    <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={isScrolled ? { y: 12 } : { y: 0 }}
-        transition={{ type: 'tween', duration: 0.28 }}
-        className={`fixed top-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? // When scrolled we inset the nav slightly from the edges so it appears "floating"
-              theme === "light"
-              ? "left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-white/85 backdrop-blur-sm shadow-lg border border-gray-200 rounded-2xl"
-              : "left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-gray-900/95 backdrop-blur-sm shadow-lg border border-white/20 rounded-2xl"
-            : "left-0 right-0 bg-transparent"
-        }`}
-        style={{ willChange: 'transform' }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <motion.div
-            whileHover={{ scale: 1.05 }}
-            onClick={() => {
-              navigate('/');
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            className='flex items-center space-x-2 cursor-pointer'>
-            <div className='w-14 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-[#073f70] to-[#1f84d6]'>
-              <span className='text-white font-bold text-base sm:text-lg'>
-                OSW
-              </span>
-            </div>
-          </motion.div>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "border-b-2 border-stone-200 bg-cream/90 backdrop-blur-lg dark:border-stone-800 dark:bg-night/90"
+          : "border-b-2 border-transparent"
+      }`}
+    >
+      <nav className="container-page flex h-16 items-center justify-between">
+        {/* Brand */}
+        <Link to="/" className="flex items-center gap-2">
+          <span className="flex h-9 w-9 -rotate-3 items-center justify-center rounded-lg bg-brand text-base font-black text-white shadow-md shadow-brand/30">
+            <span className="rotate-3">OSW</span>
+          </span>
+          <span className="font-display text-xl font-bold tracking-tight text-stone-900 dark:text-white">
+            Open Source <span className="text-brand">World</span>
+          </span>
+        </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <div className="flex space-x-6">
-                {navItems.map((item) => (
-                  <motion.button
-                    key={item.name}
-                    whileHover={{ scale: 1.05 }}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`text-sm font-medium transition-colors hover:scale-105 ${
-                      isScrolled
-                        ? theme === "light"
-                          ? "text-secondary-700 hover:text-primary-600"
-                          : "text-gray-300 hover:text-white"
-                        : "text-white hover:text-gray-200"
-                    }`}
-                  >
-                    {item.name}
-                  </motion.button>
-                ))}
-              </div>
+        {/* Desktop nav */}
+        <div className="hidden items-center gap-1 md:flex">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                isActive(link.to)
+                  ? "bg-stone-900 text-white dark:bg-white dark:text-stone-900"
+                  : "text-stone-600 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <button
+            onClick={scrollToContact}
+            className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+              isActive("/#contact")
+                ? "bg-stone-900 text-white dark:bg-white dark:text-stone-900"
+                : "text-stone-600 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
+            }`}
+          >
+            Contact
+          </button>
+        </div>
 
-              {/* Desktop Theme Toggle */}
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleTheme}
-                aria-label="Toggle theme"
-                className={`p-2 rounded-lg transition-colors ${
-                  isScrolled
-                    ? theme === "light"
-                      ? "text-secondary-700 hover:bg-gray-100"
-                      : "text-white hover:bg-gray-800"
-                    : "text-white hover:bg-white/10"
+        {/* Actions */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-300 text-stone-600 transition-colors hover:bg-stone-100 dark:border-stone-700 dark:text-stone-200 dark:hover:bg-stone-800"
+          >
+            {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
+          </button>
+          <a
+            href="https://discord.gg/hgnUsqAmMT"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary hidden sm:inline-flex !px-5 !py-2"
+          >
+            Join us
+            <ArrowUpRight size={16} />
+          </a>
+          <button
+            onClick={() => setIsMenuOpen((v) => !v)}
+            aria-label="Toggle menu"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-stone-700 hover:bg-stone-100 dark:text-stone-200 dark:hover:bg-stone-800 md:hidden"
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="border-t-2 border-stone-200 bg-cream dark:border-stone-800 dark:bg-night md:hidden">
+          <div className="container-page flex flex-col gap-1 py-4">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
+                  isActive(link.to)
+                    ? "bg-stone-900 text-white dark:bg-white dark:text-stone-900"
+                    : "text-stone-600 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
                 }`}
               >
-                {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-              </motion.button>
-            </div>
-
-            {/* Mobile Menu Controls */}
-            <div className="md:hidden flex items-center space-x-2">
-              {/* Mobile Theme Toggle */}
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleTheme}
-                aria-label="Toggle theme"
-                className={`p-2 rounded-lg transition-colors min-w-[44px] min-h-[44px] ${
-                  isScrolled
-                    ? theme === "light"
-                      ? "text-secondary-700 hover:bg-gray-100"
-                      : "text-white hover:bg-gray-800"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-              </motion.button>
-
-              {/* Mobile Menu Toggle */}
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleMobileMenu}
-                aria-label="Toggle mobile menu"
-                className={`p-2 rounded-lg transition-colors min-w-[44px] min-h-[44px] ${
-                  isScrolled
-                    ? theme === "light"
-                      ? "text-secondary-700 hover:bg-gray-100"
-                      : "text-white hover:bg-gray-800"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </motion.button>
-            </div>
+                {link.label}
+              </Link>
+            ))}
+            <button
+              onClick={scrollToContact}
+              className={`rounded-xl px-4 py-3 text-sm font-semibold transition-colors text-left ${
+                !isActive("/about") && !isActive("/team")
+                  ? "bg-stone-900 text-white dark:bg-white dark:text-stone-900"
+                  : "text-stone-600 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
+              }`}
+            >
+              Contact
+            </button>
+            <a
+              href="https://discord.gg/hgnUsqAmMT"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary mt-3 w-full"
+            >
+              Join our community
+              <ArrowUpRight size={16} />
+            </a>
           </div>
         </div>
-      </motion.nav>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 z-40 md:hidden"
-              onClick={closeMobileMenu}
-            />
-
-            {/* Mobile Menu */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] z-50 md:hidden ${
-                theme === "light"
-                  ? "bg-white shadow-2xl"
-                  : "bg-gray-900 shadow-2xl"
-              }`}
-              // Accessibility: menu container
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="mobile-menu-title"
-              ref={menuRef}
-              tabIndex={-1}
-            >
-              <div className="flex flex-col h-full">
-                {/* Mobile Menu Header */}
-                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-                  <div
-                    className={`text-xl font-bold ${
-                      theme === "light" ? "text-primary-600" : "text-white"
-                    }`}
-                  >
-                    <h2 id="mobile-menu-title">Menu</h2>
-                  </div>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    onClick={closeMobileMenu}
-                    ref={closeButtonRef}
-                    aria-label="Close menu"
-                    className={`p-2 rounded-lg ${
-                      theme === "light"
-                        ? "text-gray-600 hover:bg-gray-100"
-                        : "text-gray-300 hover:bg-gray-800"
-                    }`}
-                  >
-                    <X size={24} />
-                  </motion.button>
-                </div>
-
-                {/* Mobile Menu Items */}
-                <div className="flex-1 py-6">
-                  {navItems.map((item, index) => (
-                    <motion.button
-                      key={item.name}
-                      initial={{ x: 50, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.1 }}
-                      onClick={() => scrollToSection(item.href)}
-                      className={`w-full text-left px-6 py-4 text-lg font-medium transition-colors ${
-                        theme === "light"
-                          ? "text-gray-700 hover:text-primary-600 hover:bg-gray-50"
-                          : "text-gray-300 hover:text-white hover:bg-gray-800"
-                      }`}
-                    >
-                      {item.name}
-                    </motion.button>
-                  ))}
-                </div>
-
-                {/* Mobile Menu Footer */}
-                <div
-                  className={`p-4 border-t ${
-                    theme === "light" ? "border-gray-200" : "border-gray-700"
-                  }`}
-                >
-                  <div
-                    className={`text-sm ${
-                      theme === "light" ? "text-gray-500" : "text-gray-400"
-                    }`}
-                  >
-                    Open Source World
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+      )}
+    </header>
   );
 };
 

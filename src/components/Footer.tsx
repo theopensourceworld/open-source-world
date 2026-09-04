@@ -1,43 +1,73 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { FaGithub, FaLinkedin, FaTwitter, FaYoutube, FaHeart, FaGlobe, FaEnvelope, FaArrowUp, FaCheckCircle } from 'react-icons/fa';
-import emailjs from '@emailjs/browser';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Github,
+  Twitter,
+  Linkedin,
+  Youtube,
+  Mail,
+  Heart,
+  Instagram,
+  Send,
+  CheckCircle2,
+} from "lucide-react";
+import emailjs from "@emailjs/browser";
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
+const COLUMNS = [
+  {
+    title: "Explore",
+    links: [
+      { label: "Home", to: "/" },
+      { label: "About", to: "/about" },
+      { label: "Team", to: "/team" },
+      { label: "Contact", to: "/#contact" },
+    ],
+  },
+  {
+    title: "Community",
+    links: [
+      { label: "Join Discord", to: "https://discord.gg/hgnUsqAmMT" },
+      { label: "Contribute", to: "https://github.com/theopensourceworld/open-source-world" },
+      { label: "Hacktoberfest", to: "https://hacktoberfest.com/" },
+      { label: "OSK Branch", to: "/about" },
+    ],
+  },
+];
+
+const SOCIALS = [
+  { label: "GitHub", href: "https://github.com/theopensourceworld", icon: Github },
+  { label: "LinkedIn", href: "https://linkedin.com/company/open-source-world", icon: Linkedin },
+  { label: "Twitter", href: "https://twitter.com/opensourceworld", icon: Twitter },
+  { label: "YouTube", href: "https://youtube.com/@opensourceworld", icon: Youtube },
+  { label: "Instagram", href: "https://www.instagram.com/0pensourceworld/", icon: Instagram },
+];
+
+const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Newsletter state management
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  // Newsletter state
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [subscribeError, setSubscribeError] = useState('');
+  const [subscribeError, setSubscribeError] = useState("");
 
-  // EmailJS configuration - Using environment variables
-  const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID || '';
-  const EMAILJS_NEWSLETTER_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_NEWSLETTER_TEMPLATE_ID || '';
-  const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '';
+  const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID || "";
+  const EMAILJS_NEWSLETTER_TEMPLATE_ID =
+    process.env.REACT_APP_EMAILJS_NEWSLETTER_TEMPLATE_ID || "";
+  const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || "";
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const validateEmail = (email: string) => {
-    if (!email.trim()) {
-      return 'Email is required';
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return 'Please enter a valid email address';
-    }
-    return '';
+  const validateEmail = (value: string) => {
+    if (!value.trim()) return "Email is required";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+      return "Please enter a valid email address";
+    return "";
   };
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const error = validateEmail(email);
     if (error) {
       setEmailError(error);
@@ -45,393 +75,220 @@ const Footer = () => {
     }
 
     setIsSubscribing(true);
-    setSubscribeError('');
+    setSubscribeError("");
 
     try {
-      // Check if EmailJS is properly configured
-      if (!EMAILJS_SERVICE_ID || !EMAILJS_NEWSLETTER_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
-        throw new Error('EmailJS configuration missing. Please check your environment variables.');
+      if (
+        !EMAILJS_SERVICE_ID ||
+        !EMAILJS_NEWSLETTER_TEMPLATE_ID ||
+        !EMAILJS_PUBLIC_KEY
+      ) {
+        throw new Error("EmailJS configuration missing.");
       }
-
-      // Send newsletter subscription using EmailJS
-      const templateParams = {
-        to_email: 'opensourceworld.fyi@gmail.com', // Your recipient email
-        from_email: email,
-        subscriber_email: email,
-        to_name: 'Open Source World Team',
-        subscription_date: new Date().toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }),
-        message: `New newsletter subscription from: ${email}`
-      };
 
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_NEWSLETTER_TEMPLATE_ID,
-        templateParams,
+        {
+          to_email: "opensourceworld.fyi@gmail.com",
+          from_email: email,
+          subscriber_email: email,
+          to_name: "Open Source World Team",
+          subscription_date: new Date().toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }),
+          message: `New newsletter subscription from: ${email}`,
+        },
         EMAILJS_PUBLIC_KEY
       );
 
       setIsSubscribing(false);
       setIsSubscribed(true);
-      setEmail('');
-
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setIsSubscribed(false);
-      }, 5000);
-    } catch (error) {
-      console.error('EmailJS Newsletter Error:', error);
+      setEmail("");
+      setTimeout(() => setIsSubscribed(false), 5000);
+    } catch (err) {
+      console.error("EmailJS Newsletter Error:", err);
       setIsSubscribing(false);
-      setSubscribeError('Failed to subscribe. Please try again later.');
+      setSubscribeError("Failed to subscribe. Please try again later.");
     }
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    // Clear error when user starts typing
-    if (emailError) {
-      setEmailError('');
-    }
-    if (subscribeError) {
-      setSubscribeError('');
-    }
-  };
-
-  const scrollToSection = (href: string) => {
-    if (href.startsWith('/#')) {
-      const hash = href.substring(2);
-      if (location.pathname !== '/') {
-        navigate('/');
+  const handleLinkClick = (to: string) => {
+    if (to.startsWith("/#")) {
+      const hash = to.substring(2);
+      if (location.pathname !== "/") {
+        navigate("/");
         setTimeout(() => {
-          const element = document.querySelector(`#${hash}`);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
+          document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
         }, 100);
       } else {
-        const element = document.querySelector(`#${hash}`);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
+        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
       }
-    } else if (href.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else if (href.startsWith('/')) {
-      navigate(href);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (to.startsWith("http")) {
+      window.open(to, "_blank", "noopener noreferrer");
+    } else {
+      navigate(to);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
-  const footerLinks = {
-    company: [
-      { name: 'About OSW', href: '/about' },
-      { name: 'Our Mission', href: '/about' },
-      { name: 'Team', href: '/team' },
-      { name: 'Contact', href: '/#contact' }
-    ],
-    community: [
-      { name: 'Join Community', href: '/#contact' },
-      { name: 'Contribute', href: 'https://github.com/theopensourceworld/open-source-world', external: true },
-      { name: 'Our Initiatives', href: '/#initiatives' },
-      { name: 'Newsletter', href: '/#contact' }
-    ],
-    resources: [
-      { name: 'Documentation', href: 'https://github.com/theopensourceworld/open-source-world', external: true },
-      { name: 'GitHub', href: 'https://github.com/theopensourceworld/open-source-world', external: true },
-      { name: 'Blog', href: '#' },
-      { name: 'Events', href: '#' }
-    ]
-  };
-
-  const socialLinks = [
-    { name: 'GitHub', icon: FaGithub, href: 'https://github.com/theopensourceworld' },
-    { name: 'LinkedIn', icon: FaLinkedin, href: 'https://linkedin.com/company/open-source-world' },
-    { name: 'Twitter', icon: FaTwitter, href: 'https://twitter.com/opensourceworld' },
-    { name: 'YouTube', icon: FaYoutube, href: 'https://youtube.com/@opensourceworld' }
-  ];
-
   return (
-    <footer className="bg-gray-900 text-white relative">
-      {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
-          {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex items-center space-x-3 mb-4 sm:mb-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
-                  <FaGlobe size={20} className="text-white sm:w-6 sm:h-6" />
-                </div>
-                <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-white">Open Source World</h3>
-                  <p className="text-blue-400 text-xs sm:text-sm font-medium">Global Innovation Community</p>
-                </div>
-              </div>
+    <footer className="border-t-4 border-brand bg-stone-900 text-stone-300">
+      {/* Newsletter band */}
+      <div className="border-b border-stone-800">
+        <div className="container-page py-12">
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="flex items-center justify-center gap-2">
+              <span className="tag !border-stone-600 !bg-stone-800 !text-stone-200">
+                Newsletter
+              </span>
+              <span className="tag !border-brand/60 !bg-transparent !text-brand">
+                Stay connected
+              </span>
+            </div>
 
-              <p className="text-gray-300 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
-                Connecting developers worldwide through open source collaboration. 
-                Building the future of technology together, one commit at a time.
-              </p>
-
-              <div className="flex items-center space-x-3 sm:space-x-4">
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    className="w-10 h-10 bg-gray-700 hover:bg-blue-600 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md min-w-[44px] min-h-[44px]"
-                  >
-                    <social.icon size={18} className="text-gray-300 hover:text-white" />
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Company Links */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-white">Company</h4>
-              <ul className="space-y-2 sm:space-y-3">
-                {footerLinks.company.map((link) => (
-                  <li key={link.name}>
-                    <button
-                      onClick={() => scrollToSection(link.href)}
-                      className="text-gray-300 hover:text-blue-400 transition-colors duration-300 text-left text-sm sm:text-base min-h-[44px]"
-                    >
-                      {link.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Community Links */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-white">Community</h4>
-              <ul className="space-y-2 sm:space-y-3">
-                {footerLinks.community.map((link) => (
-                  <li key={link.name}>
-                    {link.external ? (
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-300 hover:text-blue-400 transition-colors duration-300 text-sm sm:text-base"
-                      >
-                        {link.name}
-                      </a>
-                    ) : (
-                      <button
-                        onClick={() => scrollToSection(link.href)}
-                        className="text-gray-300 hover:text-blue-400 transition-colors duration-300 text-left text-sm sm:text-base min-h-[44px]"
-                      >
-                        {link.name}
-                      </button>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Resources Links */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <h4 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-white">Resources</h4>
-              <ul className="space-y-2 sm:space-y-3">
-                {footerLinks.resources.map((link) => (
-                  <li key={link.name}>
-                    {link.external ? (
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-300 hover:text-blue-400 transition-colors duration-300 text-sm sm:text-base"
-                      >
-                        {link.name}
-                      </a>
-                    ) : (
-                      <button
-                        onClick={() => scrollToSection(link.href)}
-                        className="text-gray-300 hover:text-blue-400 transition-colors duration-300 text-left text-sm sm:text-base min-h-[44px]"
-                      >
-                        {link.name}
-                      </button>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Newsletter Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-700"
-        >
-          <div className="text-center">
-            <h4 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white">Stay Connected</h4>
-            <p className="text-gray-300 mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base">
-              Get the latest updates on open source projects, community events, and opportunities directly in your inbox.
-            </p>
-            
             {isSubscribed ? (
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="max-w-md mx-auto px-4 py-6"
-              >
-                <div className="flex items-center justify-center space-x-3 text-green-400">
-                  <FaCheckCircle size={24} />
-                  <span className="text-lg font-semibold">Successfully Subscribed!</span>
-                </div>
-                <p className="text-gray-300 mt-2 text-sm">Thank you for joining our community!</p>
-              </motion.div>
+              <div className="mx-auto mt-5 max-w-md rounded-xl border-2 border-emerald-300 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400">
+                <span className="inline-flex items-center gap-2">
+                  <CheckCircle2 size={16} />
+                  Successfully subscribed — welcome aboard!
+                </span>
+              </div>
             ) : (
-              <form onSubmit={handleNewsletterSubmit} className="max-w-md mx-auto px-4">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <div className="flex-1">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={handleEmailChange}
-                      placeholder="Enter your email"
-                      disabled={isSubscribing}
-                      className={`w-full px-4 py-3 rounded-xl bg-gray-700 border text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base min-h-[48px] ${
-                        emailError ? 'border-red-400' : 'border-gray-600'
-                      } ${isSubscribing ? 'opacity-75 cursor-not-allowed' : ''}`}
-                    />
-                  </div>
-                  <motion.button
+              <>
+                <h3 className="mt-5 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                  Get the latest from{" "}
+                  <span className="text-brand">Open Source World</span>
+                </h3>
+                <p className="mt-3 text-stone-400">
+                  Open source projects, community events, and opportunities —
+                  straight to your inbox.
+                </p>
+                <form
+                  onSubmit={handleNewsletterSubmit}
+                  className="mt-6 flex flex-col gap-3 sm:flex-row"
+                >
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (emailError) setEmailError("");
+                      if (subscribeError) setSubscribeError("");
+                    }}
+                    placeholder="Enter your email"
+                    disabled={isSubscribing}
+                    aria-label="Email address"
+                    className={`flex-1 rounded-full border-2 border-stone-600 bg-stone-800 px-5 py-3 text-sm text-white placeholder:text-stone-500 transition-colors focus:border-brand focus:outline-none ${
+                      emailError ? "border-red-500" : ""
+                    }`}
+                  />
+                  <button
                     type="submit"
                     disabled={isSubscribing}
-                    whileHover={!isSubscribing ? { scale: 1.05 } : {}}
-                    whileTap={!isSubscribing ? { scale: 0.95 } : {}}
-                    className={`bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center space-x-2 text-sm sm:text-base min-h-[48px] ${
-                      isSubscribing ? 'opacity-75 cursor-not-allowed' : ''
-                    }`}
+                    className="btn bg-brand text-white hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-75"
                   >
                     {isSubscribing ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        <span>Subscribing...</span>
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        Subscribing...
                       </>
                     ) : (
                       <>
-                        <FaEnvelope />
-                        <span>Subscribe</span>
+                        <Send size={16} />
+                        Subscribe
                       </>
                     )}
-                  </motion.button>
-                </div>
+                  </button>
+                </form>
                 {emailError && (
-                  <p className="mt-2 text-sm text-red-400 text-left">{emailError}</p>
+                  <p className="mt-2 text-sm text-red-400">{emailError}</p>
                 )}
                 {subscribeError && (
-                  <div className="mt-3 p-3 bg-red-900/50 border border-red-400 text-red-300 rounded-xl">
-                    <p className="text-sm">{subscribeError}</p>
+                  <div className="mt-3 rounded-xl border-2 border-red-800 bg-red-950/30 px-4 py-3 text-center text-sm font-semibold text-red-400">
+                    {subscribeError}
                   </div>
                 )}
-              </form>
+              </>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* Back to Top Button just above Bottom Bar */}
-      <motion.button
-        onClick={scrollToTop}
-        whileHover={{ scale: 1.1, y: -2 }}
-        className="absolute bottom-28 right-6 w-12 h-12 sm:w-14 sm:h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-50"
-        aria-label="Back to top"
-      >
-        <FaArrowUp size={20} />
-      </motion.button>
-
-      {/* Bottom Bar */}
-      <div className="bg-black py-4 sm:py-6 border-t border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="flex items-center text-gray-400 text-xs sm:text-sm text-center md:text-left"
-            >
-              <span>© {currentYear} Open Source World. Made with</span>
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
-                className="mx-2"
-              >
-                <FaHeart className="text-red-500" />
-              </motion.div>
-              <span>by the OSW community</span>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-400"
-            >
-              <button 
-                onClick={() => window.open('/privacy-policy', '_blank')}
-                className="hover:text-blue-400 transition-colors duration-300 min-h-[44px]"
-              >
-                Privacy Policy
-              </button>
-              <button 
-                onClick={() => window.open('/terms-of-service', '_blank')}
-                className="hover:text-blue-400 transition-colors duration-300 min-h-[44px]"
-              >
-                Terms of Service
-              </button>
-              <button 
-                onClick={() => window.open('/code-of-conduct', '_blank')}
-                className="hover:text-blue-400 transition-colors duration-300 min-h-[44px]"
-              >
-                Code of Conduct
-              </button>
-            </motion.div>
+      {/* Main footer grid */}
+      <div className="container-page grid gap-12 py-16 lg:grid-cols-4">
+        {/* Brand */}
+        <div className="lg:col-span-2">
+          <div className="flex items-center gap-2">
+            <span className="flex h-9 w-9 -rotate-3 items-center justify-center rounded-lg bg-brand text-base font-black text-white">
+              <span className="rotate-3">OSW</span>
+            </span>
+            <span className="font-display text-xl font-bold text-white">
+              Open Source World
+            </span>
           </div>
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-stone-400">
+            Empowering developers worldwide to code, collaborate, and contribute
+            to global open source projects. A community for everyone — from
+            first PRs to leading major initiatives.
+          </p>
+          <div className="mt-6 flex gap-2">
+            {SOCIALS.map((s) => {
+              const Icon = s.icon;
+              return (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-700 text-stone-400 transition-all hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white"
+                >
+                  <Icon size={17} />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Link columns */}
+        {COLUMNS.map((col) => (
+          <div key={col.title}>
+            <h4 className="font-display text-lg font-semibold text-white">
+              {col.title}
+            </h4>
+            <ul className="mt-4 space-y-3">
+              {col.links.map((link) => (
+                <li key={link.label}>
+                  <button
+                    onClick={() => handleLinkClick(link.to)}
+                    className="text-sm text-stone-400 transition-colors hover:text-brand"
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-stone-800">
+        <div className="container-page flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
+          <p className="text-sm text-stone-500">
+            © {year} Open Source World. Built with{" "}
+            <Heart size={13} className="inline text-brand" /> worldwide.
+          </p>
+          <a
+            href="mailto:opensourceworld.fyi@gmail.com"
+            className="inline-flex items-center gap-1.5 text-sm text-stone-500 transition-colors hover:text-brand"
+          >
+            <Mail size={14} />
+            opensourceworld.fyi@gmail.com
+          </a>
         </div>
       </div>
     </footer>
